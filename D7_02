@@ -7,3 +7,60 @@ A strong answer is:
 The LLM is built using Deep Learning, which is a subset of Machine Learning, 
 and Machine Learning itself is a subset of Artificial Intelligence.
 ChatGPT mainly works on Natural Language Processing tasks such as understanding and generating human language."
+
+
+| Traditional NLP        | GenAI                                   |
+| ---------------------- | --------------------------------------- |
+| Remove stop words      | Usually not required                    |
+| Stemming               | Usually not required                    |
+| Lemmatization          | Usually not required                    |
+| TF-IDF                 | Usually not required for the LLM itself |
+| Chunking               | ✅ Required for RAG                      |
+| HTML cleaning          | ✅ Common                                |
+| OCR cleaning           | ✅ Common                                |
+| PII masking            | ✅ Common                                |
+| Prompt formatting      | ✅ Very common                           |
+| Document summarization | ✅ Common                                |
+
+User Uploads PDF
+        │
+        ▼
+Extract Text
+        │
+        ▼
+Clean Text
+        │
+        ▼
+Split into Chunks
+        │
+        ▼
+Generate Embeddings
+        │
+        ▼
+Store in Vector Database
+        │
+        ▼
+User asks a question
+        │
+        ▼
+Retrieve relevant chunks
+        │
+        ▼
+Build Prompt
+        │
+        ▼
+Send to LLM
+        │
+        ▼
+Generate Response
+
+
+"Do GenAI Engineers preprocess data?"
+
+You can answer:
+
+Yes, but the preprocessing is different from traditional NLP. We usually don't perform steps like stemming, lemmatization, 
+or TF-IDF for the LLM itself because the model handles language understanding internally. Instead, we preprocess data by cleaning documents,
+extracting text, chunking large files, masking sensitive information, formatting structured data into prompts, 
+generating embeddings, and retrieving relevant context for RAG systems.
+
