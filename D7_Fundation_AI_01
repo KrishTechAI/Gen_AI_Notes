@@ -1,0 +1,473 @@
+Why are LLMs used?
+
+"LLMs are used because they can understand and generate natural language. 
+Unlike traditional NLP models that are usually designed for a single task, an LLM can perform many tasks—such as question answering, summarization, translation,
+content generation, code generation, and conversational AI—using different prompts. This flexibility makes LLMs valuable for building chatbots, virtual assistants,
+document analysis tools, and other AI-powered applications."
+
+7. Real-world GenAI Use Cases
+
+Don't just say
+
+Chatbot
+
+Know
+
+Code generation
+Content writing
+Resume generation
+Customer support
+Document summarization
+Translation
+RAG
+AI Agents *****
+
+AI-->ML-->---DL--->NLP-->LLM--->Gen AI
+
+AI--> Machine Learning --> Deep Learning --> Neural Networks -->Transformers-->Tokens--->Embeddings--->LLMs--->Prompt Engineering--->RAG--->Agents
+
+[ChatGPT is an AI assistant that is powered by a Large Language Model (LLM).
+or
+
+ChatGPT is an AI assistant that uses an LLM to understand user prompts and generate responses.]
+
+Artificial Intelligence (AI)
+│
+├── Machine Learning (ML)
+│     │
+│     ├── Deep Learning (DL)
+│     │      │
+│     │      ├── Large Language Models (LLMs)
+│     │      │      │
+│     │      │      ├── GPT
+│     │      │      ├── Claude
+│     │      │      ├── Gemini
+│     │      │      └── Llama
+│     │
+│     └── Computer Vision
+│
+└── Robotics
+
+So:
+
+AI = The whole field.
+LLM = One type of AI model.
+ChatGPT = An application built using an LLM.
+
+GAI engineer:
+
+You generally do not train an LLM from scratch. Instead, you use an already trained LLM provided by organizations and build AI applications on top of it.
+
+Think of it like this
+
+Organizations such as:
+
+OpenAI → GPT models
+Anthropic → Claude models
+Google → Gemini models
+Meta → Llama models
+Mistral AI → Mistral models
+
+have already spent enormous resources training these LLMs.As a GenAI Engineer, your job is to use these models to build useful AI applications. The LLM acts as the brain, while you build everything around it.
+
+[
+
+The LLM is used at the point where your application needs to understand language and generate a response.
+
+
+                User
+                  │
+                  ▼
+        Chatbot UI (Streamlit/React)
+                  │
+                  ▼
+      Backend (Python/FastAPI)
+                  │
+        ┌─────────┴─────────┐
+        │                   │
+        ▼                   ▼
+ Company Documents      Prompt Engineering
+ (PDF, DOCX, DB)             │
+        │                    │
+        ▼                    │
+    Chunking                 │
+        │                    │
+        ▼                    │
+   Embeddings                │
+        │                    │
+        ▼                    │
+  Vector Database            │
+        │                    │
+        └─────────┬──────────┘
+                  ▼
+          Build Final Prompt
+                  │
+                  ▼
+      🔥 GPT / Claude / Gemini (LLM)
+                  │
+                  ▼
+        Generated Response
+                  │
+                  ▼
+          Backend (Python)
+                  │
+                  ▼
+          Chatbot UI
+                  │
+                  ▼
+                User
+
+Step 1. User asks a question
+Step 2: Backend receives it --->FastAPI receives the request.
+Step 3: RAG searches documents --->It retrieves only the relevant information.
+step 3: Prompt Engineering
+Step 5: HERE the LLM is used--->Your backend sends the prompt to the LLM.
+Step 6: Backend receives the response (Save the chat history.,Log the request.,Count tokens.,Handle errors.)
+Step 7: UI displays the answer
+
+System Prompt:
+
+You are an HR assistant.
+
+Answer only using the provided HR documents.
+
+If the answer is not available in the documents, say
+"I couldn't find that information."
+
+Do not make up information.
+
+Be polite and concise.
+--------------------------------------------------------------
+
+UI
+ ↓
+Backend
+ ↓
+RAG --RAG is the process of retrieving relevant information from the company documents and providing it to the LLM.
+ ↓
+Prompt
+ ↓
+⭐⭐⭐⭐ LLM ⭐⭐⭐⭐
+ ↓
+Answer
+ ↓
+Backend
+ ↓
+UI
+
+-------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+| Concept                               | Simple Meaning                                                                                                                                                                                 | Real-Life Example                                                                                |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Artificial Intelligence (AI)**      | AI is the broad field of making computers perform tasks that normally require human intelligence, such as thinking, learning, solving problems, or making decisions.                           | **Google Maps** finds the best route by analyzing traffic and road conditions.                   |
+| **Machine Learning (ML)**             | ML is a subset of AI where computers learn patterns from data instead of being explicitly programmed for every task. The more data they receive, the better they become at making predictions. | **Netflix** recommends movies based on what you've watched before.                               |
+| **Deep Learning (DL)**                | Deep Learning is a subset of ML that uses multi-layer neural networks to learn complex patterns. It works especially well with images, speech, and large amounts of data.                      | **Face Unlock** on your smartphone recognizes your face using deep learning.                     |
+| **Natural Language Processing (NLP)** | NLP is a branch of AI that helps computers understand, interpret, and work with human language (text and speech).                                                                              | **Gmail Spam Filter** detects whether an email is spam by analyzing its content.                 |
+| **Large Language Model (LLM)**        | An LLM is a type of deep learning model trained on huge amounts of text. It can understand questions, generate text, summarize information, translate languages, and answer queries.           | **ChatGPT** answers questions, writes emails, explains code, and summarizes documents.           |
+| **Generative AI (GenAI)**             | Generative AI uses models such as LLMs to create new content, including text, images, music, videos, and code, based on user prompts.                                                          | Asking ChatGPT to write Python code or asking an AI image generator to create a sunset painting. |
+
+
+
+
+[    Explain everything in under 2 minutes during an interview.
+Definition – "What is it?"
+Real-world example – "Where is it used?"
+Interview reasoning – "Why do we need it instead of the previous technology?"
+
+For example:
+
+ML → Why not traditional programming?
+DL → Why not classical ML?
+LLM → Why not traditional NLP?
+GenAI → Why not a standard ML model?].............
+
+
+1. What's the difference between AI, ML and DL? *****
+
+You should explain:
+Purpose
+Difference
+Relationship
+Example
+
+You should also explain
+
+AI can be rule-based.
+ML learns from data.
+DL learns using neural networks.
+
+i)Rule-Based AI:
+
+Yes. AI is a broad field that includes both rule-based systems and learning-based systems.
+Rule-based AI uses predefined rules written by humans to make decisions, while Machine Learning allows the system to learn patterns from data instead of relying solely on manually defined rules.
+
+So, AI is a broad field, and it includes both:
+
+Rule-Based AI
+Learning-Based AI (Machine Learning)
+
+Example of rule based:
+IF Age > 18
+THEN Eligible
+ELSE
+Not Eligible
+
+Machine learning:
+Age
+Income
+Occupation
+Credit Score
+Loan History  (the model has learned this from data rather than following a hand-written rule.)
+
+1. Difference between AI, ML, DL, NLP, LLM, and GenAI. Why do we need each technology?..How are they connected?
+
+| Rule-Based AI                        | Machine Learning                            |
+| ------------------------------------ | ------------------------------------------- |
+| Human writes rules                   | Model learns from data                      |
+| Fixed logic                          | Learns patterns                             |
+| Doesn't improve automatically        | Can improve with more data and retraining   |
+| Easy to understand                   | Can be more complex to interpret            |
+| Good for simple, deterministic tasks | Good for prediction and pattern recognition |
+
+
+2. NLP (Very Important)
+
+2.1 .Why do we need LLMs when NLP already exists? [NLP existed before LLMs.] (Define this) *****
+
+
+
+{
+Old NLP:
+
+Rule-based
+Regex
+Grammar rules
+↓
+Statistical NLP}
+↓
+Transformer-based NLP
+↓
+LLMs
+
+
+3.  LLM? *****
+
+How does ChatGPT generate a sentence?
+
+{
+You should know:
+Transformer
+Tokens
+Context Window
+Next Token Prediction
+Pretraining
+Fine-tuning
+Inference
+}
+
+Interviewers LOVE asking
+
+4. Generative vs Discriminative Models *****
+
+Discriminative->Picture →Cat or Dog?
+
+Generative-->Prompt →Generate a cat image.
+
+
+5. Why DL is required: *****
+
+Why can't ML solve LLM problems?
+
+ML needs manual feature engineering.
+DL automatically learns complex features.
+LLMs contain billions of parameters.
+
+6. Why Transformers? *****
+
+[Transformers → LLMs]
+
+6.1 .Why not RNN?
+
+6.2. Why not LSTM?
+
+6.3 .Why Transformer?
+
+
+7. What is AI?
+8. Difference between ML and DL?
+9.Why is NLP different from LLM?
+10.How does ChatGPT answer a question?
+11.What is a token?
+12.Why do LLMs predict the next token?
+13.What is the difference between ChatGPT and Google Search?
+14.Difference between Generative AI and Machine Learning?
+15.Can an AI system exist without Machine Learning?
+16.Why are transformers better than RNNs?
+17.GenAI → Why not a standard ML model?
+18.Where does ChatGPT fit?
+
+
+1. Artificial Intelligence (AI)
+Definition
+
+Artificial Intelligence (AI) is the field of making computers perform tasks that normally require human intelligence.
+
+These tasks include:
+
+Thinking
+Learning
+Solving problems
+Understanding language
+Making decisions
+
+AI is the big umbrella that contains many technologies.
+
+Real-Life Example
+
+Google Maps finds the fastest route by analyzing traffic.
+
+It behaves intelligently, so it is considered AI.
+
+Easy Analogy
+
+Imagine AI as a school.
+
+The school teaches many subjects.
+
+Similarly, AI contains many branches like ML, DL, NLP, Robotics, and Computer Vision.
+
+2. Machine Learning (ML)
+Definition
+
+Machine Learning is a subset of AI where computers learn patterns from data instead of following only fixed rules.
+
+Instead of programming every decision, we give the computer examples, and it learns from them.
+
+Example
+
+Netflix recommends movies based on your viewing history.
+
+It learns your preferences from data.
+
+Why ML?
+
+Without ML:
+
+If age > 18
+    Adult
+Else
+    Child
+
+Works only for simple problems.
+
+For complex problems like predicting customer churn or recommending products, writing rules becomes impossible.
+
+ML learns these patterns automatically.
+
+3. Deep Learning (DL)
+Definition
+
+Deep Learning is a subset of Machine Learning that uses neural networks with many layers to learn complex patterns.
+
+It can automatically learn features from images, speech, and text.
+
+Example
+
+Face Unlock on your phone.
+
+The phone recognizes your face without manually defining every facial feature.
+
+Why DL?
+
+Traditional ML often needs humans to decide which features are important.
+
+Deep Learning learns those features automatically from large datasets.
+
+4. Natural Language Processing (NLP)
+Definition
+
+NLP is the branch of AI that helps computers understand, process, and generate human language.
+
+Example
+
+Gmail Spam Detection
+
+The system reads the email text and predicts whether it is spam.
+
+Before LLMs
+
+Older NLP systems used:
+
+Grammar rules
+Dictionaries
+Statistical methods
+
+They worked well for specific tasks but struggled with open-ended conversations.
+
+5. Large Language Model (LLM)
+Definition
+
+An LLM is a Deep Learning model trained on massive amounts of text to predict the next token.
+
+It understands context and generates human-like text.
+
+Example
+
+ChatGPT
+
+You ask:
+
+"Explain Python."
+
+It predicts one token at a time until it forms a complete answer.
+
+Why LLMs?
+
+Traditional NLP could classify or extract information.
+
+LLMs can:
+
+Answer questions
+Write code
+Translate languages
+Summarize documents
+Generate emails
+6. Generative AI (GenAI)
+Definition
+
+Generative AI creates new content such as text, images, code, music, audio, and videos.
+
+LLMs are one type of Generative AI focused on text.
+
+Example
+
+Prompt:
+
+"Write a Python program to calculate factorial."
+
+ChatGPT generates brand-new code.
+
+Or:
+
+Prompt:
+
+"Create an image of a robot coding in a coffee shop."
+
+An image generation model creates a new image.
+
+
+
+
+
+
+
+
+
+
+
+
