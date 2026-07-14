@@ -1,0 +1,226 @@
+| Prompt Engineer                      | GenAI Engineer                                                                 |
+| ------------------------------------ | ------------------------------------------------------------------------------ |
+| Designs and optimizes prompts        | Builds complete AI-powered applications                                        |
+| Focuses on improving AI responses    | Focuses on integrating AI into software                                        |
+| Tests different prompting strategies | Writes Python code, APIs, and application logic                                |
+| Creates prompt templates             | Connects LLMs with databases, documents, and APIs                              |
+| Primarily works with prompts         | Works with prompts **plus** LangChain, RAG, vector databases, deployment, etc. |
+---------------------------------------------------------------------------------------------------------------------------------
+How does this happen in code?
+
+user_question = "My EMI has been deducted twice."
+
+customer_name = "Krishnapriya"
+
+loan_amount = 1500000
+
+prompt = f"""
+You are a banking support assistant.
+
+Customer:
+{customer_name}
+
+Loan Amount:
+{loan_amount}
+
+Customer Question:
+{user_question}
+"""
+
+response = client.responses.create(
+    model="gpt-5.5",
+    input=prompt
+)
+
+print(response.output_text)
+
+---------------------------------------------------------------
+Real-world workflow:
+
+
+Customer
+     │
+     ▼
+Types question
+     │
+     ▼
+Python Application
+     │
+     ├── Reads Database
+     ├── Calls APIs
+     ├── Searches PDF/Documents
+     ├── Retrieves Chat History
+     │
+     ▼
+Builds Prompt
+     │
+     ▼
+LLM (GPT/Gemini/Claude)
+     │
+     ▼
+Generates Response
+     │
+     ▼
+User
+----------------------------------------------------------------
+"What do you mean by giving input to a Generative AI model?"  
+
+"Giving input to a Generative AI model means sending a prompt that contains the information the model needs to generate a response. 
+The prompt may include the user's question, system instructions, business context, data retrieved from databases or APIs, relevant documents, and conversation history.
+As a GenAI Engineer, I build and structure this prompt so the model can produce accurate and context-aware responses."
+
+What is Generative AI input?
+(Generative AI input is the information that you provide to the AI model so it can generate a response.)
+
+
+
+
+What does a Generative AI Engineer do?
+
+A GenAI Engineer's job is to build software powered by Large Language Models (LLMs).
+
+1. Understand the business problem
+
+Example:
+
+Build a customer support chatbot.
+Create a document summarizer.
+Build an AI coding assistant.
+
+They first understand what the business needs.
+
+2. Choose the right LLM
+
+Examples:
+
+GPT
+Claude
+Gemini
+Llama
+Mistral
+
+They decide which model best fits the use case.
+
+3. Design prompts
+
+Prompt engineering is one part of their work.
+
+For example:
+
+"Answer only based on the provided company documents. If the answer is unavailable, say 'I don't know.'"
+
+4. Connect the LLM using APIs
+
+Using Python:
+
+response = client.responses.create(
+    model="gpt-5.5",
+    input="Summarize this document"
+)
+5. Build RAG (Retrieval-Augmented Generation)
+
+Instead of relying only on the model's knowledge, they connect it to company documents.
+
+Workflow:
+
+PDF
+   ↓
+Chunking
+   ↓
+Embeddings
+   ↓
+Vector Database
+   ↓
+Retrieve Relevant Chunks
+   ↓
+LLM
+   ↓
+Answer
+6. Build AI Agents
+
+An AI agent can:
+
+Search a database
+Call APIs
+Send emails
+Generate reports
+Perform multiple steps to complete a task
+7. Integrate with existing applications
+
+For example:
+
+FastAPI
+Flask
+Streamlit
+React (optional)
+Backend databases
+8. Evaluate and improve the AI
+
+They check:
+
+Is the answer correct?
+Is it hallucinating?
+Is it fast?
+Is it safe?
+
+Then they improve prompts, retrieval, or the application.
+
+9. Deploy the application
+
+They deploy it using platforms such as:
+
+Docker
+Kubernetes
+AWS
+Azure
+GCP
+10. Monitor and maintain
+
+After deployment they monitor:
+
+API failures
+Token usage
+Response latency
+Costs
+User feedback
+A real-world example
+
+Imagine you're building an HR chatbot.
+
+A Prompt Engineer might:
+
+Write prompts so the chatbot answers politely and accurately.
+
+A GenAI Engineer would:
+
+Build the chatbot backend.
+Connect it to the HR policy documents.
+Generate embeddings.
+Store them in a vector database.
+Implement retrieval (RAG).
+Call the LLM API.
+Expose a FastAPI endpoint.
+Deploy the application.
+Monitor logs and improve performance.
+Skills required for a GenAI Engineer
+Python
+APIs
+Git & GitHub
+SQL
+LLMs
+Prompt Engineering
+Embeddings
+Transformers (basic understanding)
+Vector Databases (FAISS, ChromaDB, Pinecone, Milvus, etc.)
+RAG
+LangChain or similar orchestration frameworks
+FastAPI
+Docker
+Cloud platforms (AWS, Azure, or GCP)
+AI evaluation and monitoring
+
+[Debug APIs and AI pipelines.
+Analyze logs when LLM calls fail.
+Monitor production systems.
+Optimize performance and reliability.
+Troubleshoot integrations with databases and external services.]
