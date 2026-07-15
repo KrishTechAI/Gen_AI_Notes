@@ -8,6 +8,28 @@ The LLM is built using Deep Learning, which is a subset of Machine Learning,
 and Machine Learning itself is a subset of Artificial Intelligence.
 ChatGPT mainly works on Natural Language Processing tasks such as understanding and generating human language."
 
+| Traditional Programming             | Rule-Based AI                                | Machine Learning                          |
+| ----------------------------------- | -------------------------------------------- | ----------------------------------------- |
+| Programmer writes business logic    | Experts provide domain knowledge as rules    | Model learns patterns from data           |
+| Uses `if`, `else`, loops, functions | Uses a knowledge base + inference engine     | Uses algorithms trained on data           |
+| No reasoning                        | Reasons using expert knowledge               | Learns and improves from examples         |
+| No learning                         | No learning                                  | Learns from data                          |
+| Example: ATM, Shopping Cart         | Medical diagnosis, Legal advice, Tax systems | Spam detection, Face recognition, ChatGPT |
+
+
+One small correction to keep in mind
+
+People sometimes casually say "rule-based AI = lots of if-else statements." That's an oversimplification. The important difference is purpose and architecture:
+
+In traditional programming, rules implement application/business logic.
+In rule-based AI, rules represent expert knowledge stored in a knowledge base, and an inference engine uses those rules to reason and reach conclusions.
+
+That's why rule-based AI was considered an early form of AI, even though it didn't learn from data the way modern AI systems do.
+
+
+
+
+
 
 | Traditional NLP        | GenAI                                   |
 | ---------------------- | --------------------------------------- |
