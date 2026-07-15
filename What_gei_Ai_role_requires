@@ -63,6 +63,38 @@ Generates Response
      ▼
 User
 ----------------------------------------------------------------
+Artificial Intelligence (AI)
+│
+├── Machine Learning (ML)
+│     │
+│     ├── Deep Learning (DL)
+│     │      │
+│     │      ├── Natural Language Processing (NLP)
+│     │      │       │
+│     │      │       ├── Transformers
+│     │      │               │
+│     │      │               ├── Large Language Models (LLMs)
+│     │      │                       │
+│     │      │                       ├── Generative AI Applications
+│
+├── Computer Vision
+├── Robotics
+├── Expert Systems
+└── Reinforcement Learning
+
+Remember this hierarchy:
+
+```
+AI
+└── ML
+      └── DL
+            └── NLP
+                  └── Transformers
+                        └── LLMs
+                              └── Generative AI
+```
+
+-------------------------------------------------------------------------------------
 "What do you mean by giving input to a Generative AI model?"  
 
 "Giving input to a Generative AI model means sending a prompt that contains the information the model needs to generate a response. 
