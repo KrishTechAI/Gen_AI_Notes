@@ -95,6 +95,47 @@ AI
 ```
 
 -------------------------------------------------------------------------------------
+The most accurate answer is:
+
+NLP is a field (or domain) within AI. It is NOT a subset of Deep Learning.
+
+Deep Learning is one of the techniques used to solve NLP problems.
+
+Correct Architecture
+
+Artificial Intelligence (AI)
+│
+├── Machine Learning (ML)
+│      │
+│      └── Deep Learning (DL)
+│
+├── Natural Language Processing (NLP)
+│      │
+│      ├── Traditional NLP
+│      │      ├── Tokenization
+│      │      ├── Stemming
+│      │      ├── Lemmatization
+│      │      ├── TF-IDF
+│      │      └── Rule-Based Systems
+│      │
+│      └── Modern NLP
+│             │
+│             └── Uses Deep Learning
+│                    │
+│                    ├── Embedding Layer
+│                    ├── Attention
+│                    ├── Transformer
+│                    └── LLMs
+│                           │
+│                           └── ChatGPT, Claude, Gemini
+│
+├── Computer Vision
+│
+├── Robotics
+│
+└── Speech Processing
+===================================================
+
 "What do you mean by giving input to a Generative AI model?"  
 
 "Giving input to a Generative AI model means sending a prompt that contains the information the model needs to generate a response. 
