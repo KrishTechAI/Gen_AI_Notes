@@ -136,6 +136,33 @@ Artificial Intelligence (AI)
 └── Speech Processing
 ===================================================
 
+Modern NLP
+
+Uses Neural Network?
+
+✅ Yes
+
+Because Modern NLP uses Deep Learning.
+
+Example:
+Sentence
+
+↓
+
+Tokenizer
+
+↓
+
+Embedding Layer
+
+↓
+
+Transformer (Neural Network)
+
+↓
+
+Answer
+================================================================
 "What do you mean by giving input to a Generative AI model?"  
 
 "Giving input to a Generative AI model means sending a prompt that contains the information the model needs to generate a response. 
