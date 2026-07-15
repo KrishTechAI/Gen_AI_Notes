@@ -630,3 +630,16 @@ allowing the model to process all tokens in parallel and focus directly on the m
 
 
 
+
+
+
+"Artificial Intelligence began with rule-based systems, where developers manually wrote rules for every scenario. As problems became more complex, 
+Machine Learning allowed systems to learn patterns from data instead of relying on fixed rules. 
+Deep Learning further improved this by using neural networks to automatically learn features from large datasets.
+For language-related tasks, the field of NLP evolved from rule-based methods to deep learning-based methods.
+RNNs and LSTMs were early sequence models, but they struggled with long-range dependencies.
+The Transformer architecture solved these limitations using the attention mechanism, enabling efficient understanding of long contexts.
+Large Language Models such as GPT are large transformer-based neural networks trained on massive text corpora.
+Generative AI applications like ChatGPT are built on top of these LLMs. As a GenAI Engineer, my role is to integrate these models into real-world applications by building APIs,
+designing prompts, implementing RAG with vector databases, managing chat history, authentication, logging, deployment, and monitoring, so users can interact with AI effectively."
+
