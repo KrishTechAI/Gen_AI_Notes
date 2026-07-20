@@ -1,0 +1,84 @@
+# What is a Token?
+
+A token is the **smallest unit of text** that an LLM processes.
+
+A token may be
+
+- A word
+- Part of a word
+- A punctuation mark
+- A number
+- A space (in some tokenizers)
+- A special symbol
+
+The important point is:
+
+> **LLMs do not understand words directly. They understand tokens.**
+Many tokenizers include leading spaces as part of the token.
+Unbeliveable---> Because those smaller pieces appear frequently during training and help the model generalize.
+
+
+Why don't LLMs simply read words?
+LLMs don't read words directly because a word-level vocabulary would become extremely large and couldn't efficiently handle new or rare words.
+Many words also share common parts, such as 'play', 'playing', and 'played', so using subword tokens lets the model reuse those patterns. 
+The tokenizer converts text into subword tokens, maps them to token IDs, and then to embeddings, which the Transformer processes.
+This approach reduces vocabulary size, handles unseen words better, and improves efficiency.
+
+
+"How do LLMs handle unseen words?"
+
+"The tokenizer has a fixed vocabulary learned during training. When it encounters a word that isn't in that vocabulary, it doesn't create a new token. 
+Instead, it splits the word into known subword tokens using its learned tokenization algorithm, such as BPE, and maps those existing subwords to their existing token IDs.
+This allows the model to process new or rare words without expanding its vocabulary."
+
+
+
+[Every tokenizer has a fixed vocabulary. Each token has a unique ID.]****
+LLMs actually process these IDs internally, not the text itself.
+
+The model now sees -- 123,678,99--instead of the original words.
+
+Why can't an LLM process plain English directly?
+Because neural networks perform mathematical operations on numbers, not text. Therefore, text must first be converted into tokens and then into numerical representations before the model can process it.
+
+What is a Token?
+
+A token is the smallest unit of text that a language model processes. 
+Before an LLM understands language, it breaks the input into tokens, converts them into numerical representations, and then processes them to predict the next token.
+
+Key Takeaways
+A token is the smallest unit processed by an LLM.
+A token is not always a word.
+Computers understand numbers, not text.
+Text is tokenized before being processed.
+Tokenization is the first step in every LLM pipeline.
+
+
+
+# Types of Tokenization
+
+1. Character Tokenization ---> Very small tokens but long sequences.
+2.  Word Tokenization -->Simple but struggles with unseen words.
+3. Subword Tokenization (Used by LLMs) -->Most modern LLMs use subword tokenization because it balances vocabulary size and flexibility.
+
+
+# Popular Tokenizers
+
+- Byte Pair Encoding (BPE)
+- WordPiece
+- SentencePiece
+
+For OpenAI models, BPE-based tokenization is commonly used.
+
+You don't need to implement these algorithms for a 1-year interview, but you should know their names and purpose.
+
+# Why Tokens Matter
+
+Tokens affect:
+
+- API cost
+- Context window
+- Model performance
+- Latency
+
+
