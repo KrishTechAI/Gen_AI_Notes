@@ -1,0 +1,759 @@
+Types of Tokenization
+
+1. Character Tokenization
+2. Word Tokenization
+3. Subword Tokenization
+
+
+1. charcater tokenzer
+
+Python --> p t t h o n
+
+
+Advantage: 
+
+Can respresent any text
+never truly encounters an unknown words
+
+Disadvantage:
+Very long sequence
+Slow for the language model
+Harder for the model to capture a word level meaning
+
+
+Use cases: OCR, handwriting recognition, DNA sequence modeling, character-level research models.
+
+2. Word Tokenization
+
+I love AI --> "I" , love, AI
+
+Advantage: 
+simple
+easy to understand
+
+Disadvantage:
+Huge vocablary
+poor handling of unseenwords
+Doesn't reuse common word part
+
+
+Use cases: Traditional NLP, spam detection, TF-IDF, sentiment analysis.
+
+
+3. Subword Tokenization
+
+Unbelievable --> Un, believ, able 
+
+Advantabe:
+
+Smaller vocablary
+Handles unseen words
+reuse common pieces
+Efficient
+
+
+This is why GPT, LLaMA, Mistral, Gemma, and many other modern LLMs use subword tokenization.
+
+Tokenization Type
+
+This answers:
+
+"How should text be split?"
+
+Examples:
+
+Character
+Word
+Subword
+
+---------------------------------------------------------------------------------------------
+
+
+
+
+Tokenizer
+
+This answers:
+
+"Which algorithm performs the splitting?"
+
+Examples:
+
+Byte Pair Encoding (BPE)
+WordPiece
+SentencePiece
+[
+Subword Tokenization
+        │
+        ├── BPE
+        ├── WordPiece
+        └── SentencePiece
+
+]
+1. BPE-  GPT style model uses BPE based tokenizater
+
+The tokenozer learns frequesnt text patterns during training
+
+Play, plaing,player --- Play apperas fequently so it stores paly as a token later the tokens become Play , ing 
+
+
+
+Does BPE create new tokens during inference?
+
+No. The vocabulary is fixed after tokenizer training.
+
+When a new word appears, the tokenizer breaks it into existing subword tokens.
+
+
+--------------------------------------------
+
+Token IDS -- tansformer connot process text. It process numbers.
+
+-------------------------------------------------------------------------
+Why Tokens Matter-- 
+
+1. API cost - you pay based on those token counts (with pricing depending on the model and provider).
+2. Context Window -If the total exceeds the model's context window, you'll need to shorten or chunk the input.
+3. Latency -More tokens generally mean more computation.
+4. Performance -Large documents are typically split into chunks before being sent to the model.
+
+"Tokens directly affect four important aspects of an LLM application. First, API cost, because providers charge based on the number of input and output tokens.
+Second, context window, since every model has a maximum token limit it can process in a single request. 
+Third, latency, because processing more tokens requires more computation and increases response time.
+Finally, performance, because sending excessive or irrelevant context can reduce answer quality, whereas sending only relevant information—often using RAG—produces faster, cheaper, and more accurate responses."
+
+[
+One important clarification
+
+You may hear people say "more tokens always reduce performance." That's not always true.
+
+If the extra tokens are relevant, they can improve the answer by giving the model more useful context.
+If the extra tokens are irrelevant or repetitive, they increase cost and latency and can make it harder for the model to focus on what matters.
+
+]
+
+"Why does API cost depend on tokens?"
+
+You can answer:
+
+"An LLM API processes text internally as tokens. Providers charge based on the number of input tokens they process and the number of output tokens they generate,
+rather than simply charging a fixed fee per request. Therefore, larger prompts and longer responses consume more tokens and increase the API cost."
+
+
+User Question
+      │
+      ▼
+Your Application
+      │
+      ▼
+LLM API
+      │
+      ├── Count Input Tokens
+      ├── Process the Tokens
+      ├── Generate Output Tokens
+      └── Count Output Tokens
+      │
+      ▼
+Response
+      │
+      ▼
+Billing = Input Tokens + Output Tokens
+
+
+| Why Tokens Matter | What Happens if Token Count is High?                          | Solution                            |
+| ----------------- | ------------------------------------------------------------- | ----------------------------------- |
+| API Cost          | Higher bill because pricing is based on input/output tokens   | Send only relevant context          |
+| Context Window    | Model may exceed its maximum token limit                      | Chunk documents, summarize, use RAG |
+| Latency           | Response becomes slower because more tokens must be processed | Reduce unnecessary tokens           |
+| Performance       | Too much irrelevant context can make answers less focused     | Retrieve only relevant information  |
+
+import tiktoken
+
+enc = tiktoken.encoding_for_model("gpt-4")
+
+text = "I love Python"
+
+token_ids = enc.encode(text)
+
+print(token_ids)
+
+print(len(token_ids))
+----------------------------------------------------------
+
+
+Real industry response:
+Customer Query
+        │
+        ▼
+tiktoken
+        │
+        ▼
+Token IDs
+        │
+        ▼
+Count Tokens
+        │
+        ▼
+Within Context Limit?
+       │
+   Yes │ No
+       ▼
+Send to GPT     Chunk the Text
+       │
+       ▼
+GPT Response
+
+
+----------------------------
+
+What is a token?
+Why don't LLMs read words directly?
+What is the difference between tokenization and tokenizer?
+Why is BPE used?
+Why do GenAI engineers use tiktoken?
+What is a token?
+✅ Why don't LLMs use words directly?
+✅ Character vs. Word vs. Subword tokenization.
+✅ BPE, WordPiece, and SentencePiece.
+✅ Why tokens matter (cost, context, latency, and performance).
+
+
+Explain, in your own words, why subword tokenization is preferred over word tokenization.
+Explain the difference between token, token ID, and embedding (we'll formally study embeddings next, but try to describe the relationship).
+------------------------------------------------------------------------------------
+
+What Does the Context Window Contain?
+It contains everything the model receives and generates for that request.
+                Context Window
+---------------------------------------------------
+
+System Prompt
+
++
+
+User Prompt
+
++
+
+Conversation History
+
++
+
+Retrieved Documents (RAG)
+
++
+
+Tool Results
+
++
+
+Model Response
+
+
+What is a context window?
+
+A GenAI Engineer ensures that requests stay within the model's context window. This includes counting tokens, chunking large documents, retrieving only relevant information using RAG, 
+managing conversation history, and optimizing prompts to reduce unnecessary token usage.
+These techniques improve performance, reduce API costs, and prevent requests from exceeding the model's token limit."
+
+Where Does a GenAI Engineer Come In?
+GenAI Engineer does not increase the model's context window.
+
+Instead, they design the application so requests stay within it.
+
+Responsibility 1 – Count Tokens
+Responsibility 2 – Chunk Large Documents
+Responsibility 3 – Use RAG
+
+esponsibility 4 – Manage Conversation History - (Send Summary + Recent History)
+
+Customer uploads PDF
+           │
+           ▼
+Read PDF
+           │
+           ▼
+Tokenizer (tiktoken)
+           │
+           ▼
+Count Tokens
+           │
+           ▼
+Within Context Limit?
+       │
+   Yes │ No
+       ▼
+ Send to LLM     Chunk Document
+                     │
+                     ▼
+              Create Embeddings
+                     │
+                     ▼
+              Store in Vector DB
+                     │
+                     ▼
+              Retrieve Relevant Chunks
+                     │
+                     ▼
+                 Send to LLM
+                     │
+                     ▼
+              Generate Response
+
+
+What happens when the context window is exceeded?
+"An LLM cannot process more tokens than its context window allows. In applications, the developer manages this by counting tokens and then reducing the input through techniques 
+such as summarizing older conversation, removing less relevant history, chunking documents
+, or retrieving only the most relevant information with RAG.
+ChatGPT itself also manages long conversations internally, but the exact implementation details are not publicly documented."
+User
+
+↓
+
+ChatGPT Application
+
+↓
+
+Current Conversation
+
+↓
+
+Too Large?
+
+      │
+ ┌────┴────┐
+ │         │
+No         Yes
+ │         │
+ ▼         ▼
+Send     Manage Context
+              │
+              ├── Summarize older parts
+              ├── Keep recent messages
+              ├── Drop less relevant context
+              └── Use memory features (if available)
+              │
+              ▼
+          Send to GPT
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q: What is the token limit of ChatGPT?
+
+A strong answer is:
+
+"ChatGPT manages long conversations automatically, so users don't usually need to worry about the token limit directly.
+However, when building applications with the OpenAI API, each model has a maximum context window measured in tokens.
+A GenAI Engineer is responsible for ensuring that the total tokens from the system prompt, conversation history, retrieved documents, user prompt, 
+and expected output stay within that limit by using techniques such as token counting, chunking, summarization, and RAG."
+
+What About ChatGPT?
+
+You may have noticed something.
+
+We've been talking for many days.
+
+How is ChatGPT still remembering?
+
+That's because ChatGPT is an application built by OpenAI.
+
+Behind the scenes, it manages long conversations by combining techniques such as:
+
+Maintaining conversation history.
+Selectively retaining relevant context.
+Summarizing older messages when appropriate.
+Using memory features (if enabled) for long-term user preferences.
+
+These are application-level features, not capabilities of the base model alone.
+
+
+
+If an interviewer asks:
+
+"Why do we summarize older conversations?"
+
+You can answer:
+
+"We summarize older conversations to preserve important context while reducing the number of tokens sent to the LLM. 
+This helps reduce API cost, stay within the model's context window, improve response speed, 
+and maintain conversation continuity without sending the entire chat history."
+
+Question: Who summarizes the conversation?
+
+Answer:
+
+In ChatGPT, the application manages long conversations internally. Users don't need to write any code.
+In your own GenAI application, the developer is responsible for managing the context window. 
+This often involves writing logic to count tokens, summarize old messages, remove less relevant history, or use RAG before sending the request to the LLM.
+
+                ChatGPT Product
+        (Built by OpenAI Engineers)
+                     │
+        Internal context management
+                     │
+                     ▼
+                    GPT
+
+
+           Your AI Application
+      (Built by You - GenAI Engineer)
+                     │
+      You write the context management
+                     │
+                     ▼
+                    GPT
+
+
+"Why do we summarize before sending the request?"
+
+You can answer:
+
+"Because the model's response also consumes tokens within the context window. If the input already fills the entire context window, 
+there is no room left for the model to generate an output. Therefore, GenAI applications reserve space for the expected response by reducing the input through summarization, truncation, 
+or retrieval before calling the LLM."
+
+Question: How do you handle context window limitations?
+
+A strong answer is:
+
+"The model's context window is fixed, so as a GenAI engineer I manage the input before making the API call. I count tokens using a tokenizer such as tiktoken, reserve space for the expected output, and if necessary reduce the input by summarizing conversation history, removing less relevant messages, chunking large documents, or using RAG to retrieve only the most relevant information. This ensures the request stays within the model's context window while preserving the information needed to answer the user's question."
+
+                User
+                  │
+                  ▼
+          Your Python Application
+                  │
+                  ▼
+          Count Tokens (tiktoken)
+                  │
+                  ▼
+      Input + Expected Output <= Model Limit?
+              │                     │
+             Yes                   No
+              │                     │
+              ▼                     ▼
+         Call GPT          Manage Context
+                               │
+          ┌────────────────────┼────────────────────┐
+          ▼                    ▼                    ▼
+    Summarize History     Retrieve (RAG)      Trim Old Messages
+          │                    │                    │
+          └────────────────────┴────────────────────┘
+                               │
+                               ▼
+                          Call GPT API
+                               │
+                               ▼
+                        Generate Response
+
+
+Good answer:
+
+"No. The exact number of output tokens cannot be predicted because generation is dynamic. Instead, as a developer, I set a maximum output token limit based on the application's requirements 
+and ensure that the input tokens 
+plus the maximum allowed output fit within the model's context window."
+
+MAX_CONTEXT = 128000
+MAX_OUTPUT = 4000
+MAX_INPUT = MAX_CONTEXT - MAX_OUTPUT
+
+messages = load_conversation()
+
+input_tokens = count_tokens(messages)
+
+if input_tokens > MAX_INPUT:
+    messages = summarize(messages)
+    input_tokens = count_tokens(messages)
+
+response = client.responses.create(
+    model="gpt-5",
+    input=messages,
+    max_output_tokens=MAX_OUTPUT
+)
+-------------------------------------------------------------------------------------------------------------------
+
+
+Why don't LLMs read words directly?
+Reading only complete words would require an extremely large vocabulary and would fail on unseen words. Modern LLMs use subword tokenization, which splits words into reusable pieces. This reduces vocabulary size and allows the model to process previously unseen words effectively.
+3.  What is the role of tokenization in an LLM?
+Tokenization is the preprocessing step that converts raw text into tokens and token IDs. It acts as the bridge between human-readable text and the numerical representation required by the Transformer.
+4. What is the developer's responsibility regarding tokenization?
+Answer (this is the one interviewers love):
+
+As a GenAI Engineer, I don't implement the tokenizer algorithm itself. Instead, I use tokenizer libraries such as tiktoken or Hugging Face's 
+AutoTokenizer to count tokens, estimate API costs, manage context windows, preprocess datasets, chunk large documents, and ensure requests fit within the model's token limit before sending them to the LLM.
+If a request exceeds the context window, I modify the input text—such as summarizing conversation history or retrieving only relevant document chunks—and then
+
+
+Explain the complete LLM input pipeline.
+
+Answer:
+
+The pipeline begins with user text. A tokenizer converts the text into tokens, which are mapped to token IDs. These IDs are transformed into embeddings, 
+and the Transformer processes those embeddings using self-attention to understand relationships between tokens. 
+Finally, the model predicts the next token repeatedly until the response is complete.
+recalculate the token count before making the API call.
+
+
+A stronger answer is:
+
+"Modern LLMs primarily use subword tokenization (such as BPE or SentencePiece), which balances vocabulary size and flexibility. 
+The tokenizer converts text into subword tokens, maps them to token IDs, and those IDs are
+then transformed into embeddings that the Transformer processes."
+
+
+"What is tiktoken? Is it a tokenization technique?"
+
+Strong Answer:
+
+"tiktoken is not a tokenization technique. It is a Python library developed by OpenAI that implements the tokenizer used by OpenAI models. As a GenAI Engineer, 
+I use it to encode text into token IDs, count tokens, estimate API costs, and manage context windows. 
+Internally, it uses the tokenizer compatible with the selected OpenAI model, which is based on a BPE-style approach."
+
+
+| Layer                      | What is it?            | Purpose                                                          | Examples                                                  | Who uses it?                              |
+| -------------------------- | ---------------------- | ---------------------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------- |
+| **Tokenization Technique** | A concept or approach  | Defines **how text should be split**                             | Character, Word, Subword                                  | AI Researchers, ML Engineers              |
+| **Tokenizer Algorithm**    | Mathematical algorithm | Implements the technique efficiently                             | BPE, WordPiece, SentencePiece                             | Model Developers (OpenAI, Google, Meta)   |
+| **Tokenizer Library**      | Software package/API   | Lets developers tokenize text without implementing the algorithm | `tiktoken`, Hugging Face `AutoTokenizer`, `sentencepiece` | GenAI Engineers, ML Engineers, Developers |
+
+
+Layer 1: Tokenization Technique
+
+This answers:
+
+How should I split the text?
+
+| Technique              | Example                         | Advantages                      | Disadvantages                   | Used Today?       |
+| ---------------------- | ------------------------------- | ------------------------------- | ------------------------------- | ----------------- |
+| Character Tokenization | Python → P, y, t, h, o, n       | Small vocabulary                | Very long sequences             | ❌ Rare            |
+| Word Tokenization      | I love AI → I, love, AI         | Simple                          | Cannot handle unseen words well | ❌ Rare            |
+| Subword Tokenization   | unbelievable → un, believ, able | Handles unseen words, efficient | Slightly more complex           | ✅ Yes (Most LLMs) |
+
+Layer 2: Tokenizer Algorithms
+
+This answers:
+
+How do we implement subword tokenization?
+
+| Algorithm         | Full Form          | Used By                                      | Main Idea                                                   | Example                                          |
+| ----------------- | ------------------ | -------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| **BPE**           | Byte Pair Encoding | GPT, OpenAI models                           | Repeatedly merges the most frequent character/subword pairs | `un + believable → unbelievable` (when frequent) |
+| **WordPiece**     | -                  | BERT                                         | Chooses merges based on probability/likelihood              | `playing → play + ##ing`                         |
+| **SentencePiece** | -                  | T5, many LLaMA variants, multilingual models | Learns directly from raw text, doesn't rely on spaces       | Useful for Japanese, Chinese, multilingual text  |
+
+Layer 3: Tokenizer Libraries
+
+This answers:
+
+What do I import into my Python code?
+
+| Library                          | Supports                                 | Used By Developers For                                                      | Example                                  |
+| -------------------------------- | ---------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------- |
+| **tiktoken**                     | OpenAI GPT models                        | Count tokens, encode/decode text, estimate API cost, manage context windows | `import tiktoken`                        |
+| **AutoTokenizer** (Hugging Face) | BERT, LLaMA, Mistral, Gemma, many others | Dataset preprocessing, inference, fine-tuning                               | `from transformers import AutoTokenizer` |
+| **sentencepiece**                | Models using SentencePiece vocabularies  | Load and use SentencePiece tokenizers directly                              | `import sentencepiece as spm`            |
+
+
+
+Q1. How do you estimate API cost?
+
+Answer:
+
+I first count the input tokens using a tokenizer such as tiktoken. Then I estimate the expected output tokens based on the application's design and use the official pricing for the selected model. The estimated cost is calculated using separate rates for input and output tokens, allowing us to monitor and optimize API expenses.
+
+Q2. How do you validate prompt size before an API call?
+
+Answer:
+
+I tokenize the complete input, including the system prompt, conversation history, retrieved documents, and the current user query. I reserve space for the maximum expected output tokens and verify that the combined total is within the model's context window. If it exceeds the limit, I reduce the input by summarizing conversation history, trimming older messages, or retrieving only the relevant document chunks before making the API call.
+
+What a GenAI Engineer Does?
+
+
+| Responsibility         | Example                                               |
+| ---------------------- | ----------------------------------------------------- |
+| Reduce prompt size     | Short, focused system prompts                         |
+| Manage context window  | Summarize or trim history                             |
+| Use RAG                | Send only relevant document chunks                    |
+| Control output         | Set an appropriate `max_output_tokens`                |
+| Choose the right model | Don't use the most capable model for simple FAQ tasks |
+| Cache common responses | Avoid repeated API calls for identical questions      |
+| Measure usage          | Count tokens and monitor cost trends                  |
+
+
+
+Interviewer: "How do you control API costs in a production GenAI application?"
+
+Strong Answer:
+
+"I control costs at multiple levels. Before making an API call, I estimate token usage and validate that the request fits within the model's context window. 
+I optimize prompts, summarize long conversations, use RAG to send only relevant document chunks, choose the appropriate model for the task, and set a suitable maximum output token limit. At the application level, I monitor usage, cache repeated responses, and enforce user or organizational budgets so that API spending remains predictable."
+
+
+| Responsibility               | Do you handle it?                                         |
+| ---------------------------- | --------------------------------------------------------- |
+| Count tokens                 | ✅ Yes                                                     |
+| Estimate request cost        | ✅ Yes                                                     |
+| Optimize prompts             | ✅ Yes                                                     |
+| Reduce unnecessary tokens    | ✅ Yes                                                     |
+| Choose the appropriate model | ✅ Yes                                                     |
+| Track usage and budgets      | ✅ Yes                                                     |
+| Pay OpenAI manually          | ❌ No (handled through the organization's billing account) |
+
+
+How do we limit the cost?
+
+Method 1: Set a Maximum Output
+Method 2: Check Tokens Before Calling the API
+Method 3: Use the Right Model
+Method 4: Budget Per User
+Method 5: Monthly Budget
+Method 6: Cache Common Questions
+Method 7: Monitor Usage
+Companies usually monitor:
+| Metric                   | Why?                    |
+| ------------------------ | ----------------------- |
+| Input tokens             | Understand prompt size  |
+| Output tokens            | Control response length |
+| Cost                     | Stay within budget      |
+| Number of requests       | Detect usage spikes     |
+| Average cost per request | Optimize efficiency     |
+
+
+"Do you optimize prompts only after reaching the context limit?"
+
+Excellent Answer
+
+"No. Prompt optimization should be part of the application design from the beginning. I keep system prompts concise, retrieve only relevant information using RAG, 
+choose the appropriate model, and set suitable output token limits from the start to reduce cost and latency. 
+Summarization or trimming is a secondary strategy that's applied only when the conversation grows large enough to approach the model's context window."
+
+Interviewer:
+
+"Your company has 5 million users. Would you always use the most advanced model?"
+
+Good answer:
+
+"No. I would classify requests based on their complexity. Routine tasks such as FAQs or password-reset guidance can be handled by a smaller, lower-cost model.
+Tasks requiring complex reasoning, code generation, or document analysis would be routed to a more capable model. 
+This approach optimizes both cost and user experience."
+
+
+"Model selection is based on business and technical requirements rather than always choosing the most capable model. I evaluate factors such as task complexity, required reasoning ability,
+context window size, latency, cost, and modality requirements. For simple FAQ-style interactions, I would use a smaller and more cost-effective model.
+For complex reasoning, code generation, or long-document analysis,
+I would choose a more capable model. This balances performance, user experience, and operational cost."
+
+
+User Request
+      │
+      ▼
+What does this task require?
+      │
+      ├── Simple FAQ?
+      │       └── Smaller, faster, cheaper model
+      │
+      ├── Long document?
+      │       └── Model with a larger context window
+      │
+      ├── Complex reasoning or coding?
+      │       └── More capable reasoning model
+      │
+      └── Images or audio?
+              └── Multimodal model
+
+"Can one GenAI application use multiple models?"
+
+Strong Answer
+
+"Yes. A production GenAI application can use multiple models. The application contains routing logic that selects the appropriate model based on the task.
+For example, simple FAQ requests can be routed to a smaller, faster model, while complex document analysis or code generation can be routed to a more capable model. 
+This approach improves both cost efficiency and performance."
+
+
+"Your AI application's monthly cost has doubled. What would you do?"
+
+Excellent Answer
+
+"First, I would analyze token usage to identify the source of the increased cost. Then I would optimize prompts, reduce unnecessary context, summarize long conversations when needed, 
+implement RAG to retrieve only relevant information, choose appropriate models based on task complexity, limit output tokens where suitable, and cache repeated responses. 
+Finally, I would monitor usage metrics to ensure the optimizations are effective while maintaining response quality."
+
+
+"Would you optimize only after deployment?"
+
+Excellent Answer
+
+"No. I would incorporate optimization during the design phase itself by writing concise prompts, selecting the appropriate model, implementing RAG where applicable,
+setting reasonable output token limits, and planning for caching and monitoring.
+After deployment, I would continue monitoring usage and optimize further based on real-world traffic patterns, user behavior, and business requirements."
+
+"I would apply optimization techniques from the initial design and development stages rather than waiting for costs to become a problem.
+However, I would also continuously monitor production metrics such as token usage, latency, and API costs, because usage patterns and business requirements evolve over time.
+Optimization is an ongoing process, not a one-time activity."
+--------------------------------------------------------------
+
+# Basic Interview Questions ⭐
+
+### Q1. What is a token?
+
+**Answer:** A token is the smallest unit of text processed by an LLM. A token can represent a word, part of a word, punctuation, or another text fragment.
+
+---
+
+### Q2. Why don't LLMs read words directly?
+
+**Answer:** LLMs use tokens because tokenization reduces vocabulary size, handles new or rare words, and works consistently across languages and spellings.
+
+---
+
+### Q3. What is tokenization?
+
+**Answer:** Tokenization is the process of converting text into tokens before sending it to the model.
+
+---
+
+### Q4. What is a tokenizer?
+
+**Answer:** A tokenizer is the component that converts text into token IDs and can also convert token IDs back into text.
+
+Q5, 
+□ Token pricing
+---
+
+# Intermediate Interview Questions ⭐⭐
+
+### Q5. Why is subword tokenization preferred over word tokenization?
+
+### Q6. What is the relationship between tokens and context windows?
+
+### Q7. Why do API providers charge based on tokens instead of words?
+
+### Q8. What happens if the prompt exceeds the model's context window?
+
+---
+
+# 1-Year Experience Interview Questions ⭐⭐⭐
+
+### Q9. A customer uploads a 500-page PDF. Can you send the whole document to the LLM in one request? Why or why not?
+
+### Q10. How would you reduce token usage without losing important information?
+
+### Q11. Why is token counting important when building RAG applications?
+
+### Q12. Why might token counts differ between English, Tamil, and Chinese?
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Interviewer:
+
+What does the tokenizer object contain?
+
+Excellent Answer
+
+"The tokenizer object provides methods such as encode() to convert text into token IDs and decode() to convert token IDs back into text. Internally, it uses a vocabulary that maps tokens to integer IDs and encoding rules that determine how text is split into tokens. These components ensure that text is tokenized consistently with the language model."
+
