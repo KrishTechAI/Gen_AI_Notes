@@ -755,5 +755,99 @@ What does the tokenizer object contain?
 
 Excellent Answer
 
-"The tokenizer object provides methods such as encode() to convert text into token IDs and decode() to convert token IDs back into text. Internally, it uses a vocabulary that maps tokens to integer IDs and encoding rules that determine how text is split into tokens. These components ensure that text is tokenized consistently with the language model."
+"The tokenizer object provides methods such as encode() to convert text into token IDs and decode() to convert token IDs back into text.
+Internally, it uses a vocabulary that maps tokens to integer IDs and encoding rules that determine how text is split into tokens. These components ensure that text is tokenized consistently with the language model."
+-------------------------------------------------------
 
+import tiktoken
+
+user_input = input("Enter your prompt: ")
+
+enc = tiktoken.encoding_for_model("gpt-5")    --->#Return the correct tokenizer (Encoding object) for the specified model.   
+
+tokens = enc.encode(user_input)
+
+print("Characters:", len(user_input))
+print("Tokens:", len(tokens))
+print("Token IDs:", tokens)        
+
+
+"In the first line, tiktoken is the tokenizer library. I call its encoding_for_model() function and pass the model name 'gpt-5'.
+This function returns an Encoding object configured with GPT-5's tokenization rules, and I store that object in the variable enc. In the second line,
+I call the encode() method on that Encoding object, passing the input text 'Hello AI'. The method tokenizes the text and returns a list of token IDs, which I store in the tokens variable."
+
+
+encoding_for_model() is a function provided by the tiktoken module.
+encode() is a method because it belongs to the Encoding object.
+
+
+
+Subword Tokenization
+        │
+        ├──────────────┬───────────────┐
+        ▼              ▼               ▼
+       BPE        WordPiece      SentencePiece
+        │              │               │
+        ▼              ▼               ▼
+ GPT, GPT-2,      BERT          T5, many LLaMA
+ GPT-4, GPT-5,
+ RoBERTa, etc.
+
+
+Why are there three subword tokenization algorithms? Why doesn't every model use the same one?
+
+Answer:
+
+"All three algorithms aim to perform subword tokenization, but they optimize for different goals. 
+BPE merges the most frequent symbol pairs, making it simple and efficient, which is why it's widely used in GPT models.
+WordPiece selects subwords based on maximizing the probability of the training data, making it well suited for language understanding tasks such as BERT's masked language modeling.
+SentencePiece operates directly on raw text without requiring pre-tokenization, making it particularly effective for multilingual models and languages without explicit word boundaries, such as Japanese and Chinese. 
+The choice of algorithm depends on the model's training objectives, target languages, efficiency requirements, and design goals rather than one algorithm being universally superior."
+
+
+
+| Feature              | GPT                                       | BERT                                                    | LLaMA                                             |
+| -------------------- | ----------------------------------------- | ------------------------------------------------------- | ------------------------------------------------- |
+| Full Form            | Generative Pre-trained Transformer        | Bidirectional Encoder Representations from Transformers | Large Language Model Meta AI                      |
+| Created By           | OpenAI                                    | Google                                                  | Meta                                              |
+| Architecture         | Decoder-only Transformer                  | Encoder-only Transformer                                | Decoder-only Transformer                          |
+| Training Objective   | Next Token Prediction                     | Masked Language Modeling                                | Next Token Prediction                             |
+| Reads Context        | Left → Right                              | Left ↔ Right (bidirectional)                            | Left → Right                                      |
+| Main Purpose         | Text Generation                           | Language Understanding                                  | Text Generation                                   |
+| Generates Long Text? | ✅ Yes                                     | ❌ No                                                    | ✅ Yes                                             |
+| Chatbot?             | ✅ Excellent                               | ❌ Not designed for chat                                 | ✅ Excellent                                       |
+| Sentiment Analysis?  | Can do it, but not specialized            | ✅ Excellent                                             | Can do it                                         |
+| Open Source?         | Mostly API-based                          | Yes                                                     | ✅ Yes                                             |
+| Tokenizer            | BPE-based                                 | WordPiece                                               | SentencePiece (many variants)                     |
+| Common Uses          | ChatGPT, coding assistants, summarization | Search, classification, NER, QA                         | Local AI assistants, enterprise LLMs, fine-tuning |
+
+
+
+
+What is the difference between GPT, BERT, and LLaMA?
+
+Excellent Answer:
+
+"GPT and LLaMA are decoder-only Transformer models primarily designed for text generation. They are trained using next-token prediction, where the model predicts the next token based on previous tokens.
+GPT is developed by OpenAI and is commonly accessed through APIs, while LLaMA is developed by Meta and is open-source, allowing organizations to run and fine-tune it locally.
+BERT, on the other hand, is an encoder-only Transformer developed by Google. It is trained using masked language modeling, where it predicts masked words by considering both left and right context simultaneously.
+As a result, BERT excels at language understanding tasks such as text classification, sentiment analysis, and named entity recognition, whereas GPT and LLaMA are optimized for generating coherent text."
+
+
+
+GPT → typically uses a BPE-based tokenizer.
+BERT → uses WordPiece.
+Many LLaMA variants → use SentencePiece.
+
+
+| BPE                                             | WordPiece                                                   |
+| ----------------------------------------------- | ----------------------------------------------------------- |
+| Merges the **most frequent** pair               | Chooses the merge that **best improves the language model** |
+| Simpler                                         | More statistically informed                                 |
+| Faster training                                 | Slower training                                             |
+| GPT family commonly uses BPE-based tokenization | BERT uses WordPiece                                         |
+
+What is WordPiece?
+
+"WordPiece is a subword tokenization algorithm developed by Google and used in BERT. Unlike BPE, which merges the most frequent adjacent symbol pairs, WordPiece selects subwords that maximize the probability of the training data. 
+This usually produces more meaningful subwords and improves language understanding, making it well suited for tasks such as masked language modeling, text classification, and question answering."
