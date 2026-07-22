@@ -851,3 +851,113 @@ What is WordPiece?
 
 "WordPiece is a subword tokenization algorithm developed by Google and used in BERT. Unlike BPE, which merges the most frequent adjacent symbol pairs, WordPiece selects subwords that maximize the probability of the training data. 
 This usually produces more meaningful subwords and improves language understanding, making it well suited for tasks such as masked language modeling, text classification, and question answering."
+
+
+✅ Explain what a token is
+
+✅ Explain why LLMs don't read words
+
+✅ Explain tokenization
+
+✅ Calculate token counts
+
+✅ Explain context window
+
+✅ Explain token pricing
+
+✅ Use Python to tokenize text
+
+✅ Answer interview questions confidently
+
+
+# Practice Programs
+
+1. Count words using `split()`.
+2. Count characters in a sentence.
+3. Compare word count vs. token count (using `tiktoken`).
+4. Read a text file and estimate the number of tokens.
+5. Compare token counts for English and another language using `tiktoken`.
+
+---
+
+# Mini Project
+
+## Token Counter
+
+Features
+
+- Accept user input.
+- Display:
+  - Character count
+  - Word count
+  - Estimated token count
+- (Optional) Show actual token IDs using `tiktoken`.
+- Handle empty input gracefully.
+
+---
+
+# Basic Interview Questions ⭐
+
+### Q1. What is a token?
+
+**Answer:** A token is the smallest unit of text processed by an LLM. A token can represent a word, part of a word, punctuation, or another text fragment.
+
+---
+
+### Q2. Why don't LLMs read words directly?
+
+**Answer:** LLMs use tokens because tokenization reduces vocabulary size, handles new or rare words, and works consistently across languages and spellings.
+
+---
+
+### Q3. What is tokenization?
+
+**Answer:** Tokenization is the process of converting text into tokens before sending it to the model.
+
+---
+
+### Q4. What is a tokenizer?
+
+**Answer:** A tokenizer is the component that converts text into token IDs and can also convert token IDs back into text.
+
+---
+
+# Intermediate Interview Questions ⭐⭐
+
+### Q5. Why is subword tokenization preferred over word tokenization?
+
+### Q6. What is the relationship between tokens and context windows?
+
+### Q7. Why do API providers charge based on tokens instead of words?
+
+### Q8. What happens if the prompt exceeds the model's context window?
+
+---
+
+# 1-Year Experience Interview Questions ⭐⭐⭐
+
+### Q9. A customer uploads a 500-page PDF. Can you send the whole document to the LLM in one request? Why or why not?
+
+### Q10. How would you reduce token usage without losing important information?
+
+### Q11. Why is token counting important when building RAG applications?
+
+### Q12. Why might token counts differ between English, Tamil, and Chinese?
+
+---
+
+# Coding Questions
+
+### Easy
+
+1. Count the number of words in a sentence.
+2. Remove punctuation from a sentence.
+3. Count character frequency.
+4. Find the longest word.
+
+### Medium
+
+1. Build a simple tokenizer using `split()`.
+2. Compare `split()` token counts with `tiktoken`.
+3. Read a file and estimate token usage.
+4. Print token IDs using `tiktoken`.
