@@ -980,3 +980,7 @@ the tokenizer decodes that Token ID into readable text. This process repeats one
 | **After GPT predicts the next token** | Convert the predicted Token ID back into readable text | **Decoding** (Token ID → Text)  |
 
 
+The embedding layer in GPT converts Token IDs into dense numerical vectors called token embeddings. These embeddings capture semantic 
+and syntactic information about each token and are passed to the Transformer for contextual understanding. Since GPT uses subword tokenization, 
+the embedding layer creates token embeddings rather than traditional word embeddings.
+
