@@ -991,3 +991,9 @@ It uses attention to determine which words are most relevant.
 Positional encoding preserves word order.
 Modern LLMs such as GPT are built on Transformer architectures.
 
+Why 1536 numbers?
+
+Answer:
+
+The embedding model is trained to represent semantic information in a 1536-dimensional vector space. Each dimension contributes to the overall meaning,
+although individual dimensions don't have a human-readable interpretation.
