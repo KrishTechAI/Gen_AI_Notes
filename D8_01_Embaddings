@@ -984,3 +984,10 @@ The embedding layer in GPT converts Token IDs into dense numerical vectors calle
 and syntactic information about each token and are passed to the Transformer for contextual understanding. Since GPT uses subword tokenization, 
 the embedding layer creates token embeddings rather than traditional word embeddings.
 
+key: 
+A Transformer is an architecture, not just an attention mechanism.
+It processes all tokens in parallel.
+It uses attention to determine which words are most relevant.
+Positional encoding preserves word order.
+Modern LLMs such as GPT are built on Transformer architectures.
+
