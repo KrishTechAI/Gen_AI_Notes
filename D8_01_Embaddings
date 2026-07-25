@@ -997,3 +997,53 @@ Answer:
 
 The embedding model is trained to represent semantic information in a 1536-dimensional vector space. Each dimension contributes to the overall meaning,
 although individual dimensions don't have a human-readable interpretation.
+
+
+
+Company Documents
+        │
+        ▼
+Chunking
+        │
+        ▼
+Chunk 1
+Chunk 2
+Chunk 3
+Chunk 4
+Chunk 5
+        │
+        ▼
+Embedding Model
+        │
+        ▼
+Vector Database
+────────────────────────────────────
+
+User Question
+        │
+        ▼
+Embedding Model
+        │
+        ▼
+Question Embedding
+        │
+        ▼
+Vector Search
+(Cosine Similarity)
+        │
+        ▼
+⭐ Top-K Chunks
+        │
+        ▼
+Prompt Builder
+        │
+        ▼
+GPT
+        │
+        ▼
+Answer
+
+
+Top-K Chunks are the K most semantically similar document chunks retrieved from the vector database based on the user's query embedding.
+The vector database computes similarity scores between the query embedding and all stored chunk embeddings, ranks them, and returns the highest-scoring chunks.
+These retrieved chunks are then included as context in the prompt sent to the LLM to generate an accurate answer.
