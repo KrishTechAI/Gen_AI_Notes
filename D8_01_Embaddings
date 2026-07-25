@@ -1047,3 +1047,13 @@ Answer
 Top-K Chunks are the K most semantically similar document chunks retrieved from the vector database based on the user's query embedding.
 The vector database computes similarity scores between the query embedding and all stored chunk embeddings, ranks them, and returns the highest-scoring chunks.
 These retrieved chunks are then included as context in the prompt sent to the LLM to generate an accurate answer.
+
+
+The vector database compares the question embedding with every chunk embedding.
+If K = 1
+
+Only the best chunk is returned.
+If K = 3
+These are called the Top-K Chunks.
+
+then The RAG application builds the prompt. This prompt is sent to GPT.
