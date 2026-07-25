@@ -1057,3 +1057,29 @@ If K = 3
 These are called the Top-K Chunks.
 
 then The RAG application builds the prompt. This prompt is sent to GPT.
+
+5. How many embedding libraries are there?
+
+There isn't just one. Different companies provide embedding models and SDKs.
+
+| Library / Framework                                 | Purpose                                                   | Creates Embeddings?            |
+| --------------------------------------------------- | --------------------------------------------------------- | ------------------------------ |
+| **OpenAI (`openai`)**                               | Call OpenAI embedding models                              | ✅ Yes                          |
+| **Sentence Transformers (`sentence-transformers`)** | Run Hugging Face embedding models locally                 | ✅ Yes                          |
+| **Transformers (`transformers`)**                   | Load many Hugging Face models, including embedding models | ✅ Yes (depending on the model) |
+| **Cohere SDK**                                      | Call Cohere embedding models                              | ✅ Yes                          |
+| **Google Gen AI SDK**                               | Call Google's embedding models                            | ✅ Yes                          |
+
+6. Which one will you use as a GenAI Engineer?
+
+It depends on your project.
+
+Option 1: OpenAI (Very Common)
+from openai import OpenAI
+
+Good for:
+
+GPT
+RAG
+Chatbots
+Semantic Search
