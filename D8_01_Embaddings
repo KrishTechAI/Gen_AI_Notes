@@ -1083,3 +1083,24 @@ GPT
 RAG
 Chatbots
 Semantic Search
+
+                Python Application
+                        │
+        ┌───────────────┼────────────────┐
+        │               │                │
+        ▼               ▼                ▼
+   tiktoken         openai       sentence-transformers
+(Token Count)      (API Calls)    (Local Embeddings)
+        │               │                │
+        │               ▼                ▼
+        │        OpenAI Servers      Local Model
+        │               │                │
+        └───────────────┴────────────────┘
+                        │
+                        ▼
+                  Embedding Vectors
+
+
+The openai package is a Python SDK that allows applications to communicate with OpenAI's API. It does not generate embeddings by itself; 
+instead, it sends requests to OpenAI's embedding models, such as text-embedding-3-small, which run on OpenAI's servers. Other popular embedding libraries include sentence-transformers for local embedding generation, Hugging Face transformers for working with many open-source models, and provider-specific SDKs like Cohere or Google's GenAI SDK. As a GenAI Engineer, 
+I choose the library based on whether I want cloud-hosted or locally generated embeddings.
