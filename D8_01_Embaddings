@@ -1198,3 +1198,13 @@ results = vector_db.similarity_search(
 
 Cosine similarity is used during the retrieval stage of RAG. First, all document chunks are converted into embeddings and stored in a vector database. When a user asks a question, the question is also converted into an embedding. The vector database then computes the cosine similarity between the question embedding and all stored document embeddings, ranks them by similarity, and returns the top-k most relevant chunks. These retrieved text chunks are then included in the prompt sent to the LLM.
 
+One sentence to remember
+
+Embeddings are created first. Cosine similarity is calculated only when a search/query is performed.
+
+So the sequence is:
+
+Store time → Create embeddings and save them.
+Search time → Create the question embedding.
+Retrieval time → Compute cosine similarity between the question embedding and stored document embeddings.
+Generation time → Send the retrieved text to the LLM.
