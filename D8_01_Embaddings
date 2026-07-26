@@ -1104,3 +1104,97 @@ Semantic Search
 The openai package is a Python SDK that allows applications to communicate with OpenAI's API. It does not generate embeddings by itself; 
 instead, it sends requests to OpenAI's embedding models, such as text-embedding-3-small, which run on OpenAI's servers. Other popular embedding libraries include sentence-transformers for local embedding generation, Hugging Face transformers for working with many open-source models, and provider-specific SDKs like Cohere or Google's GenAI SDK. As a GenAI Engineer, 
 I choose the library based on whether I want cloud-hosted or locally generated embeddings.
+
+
+
+Your Python Code
+        │
+        ▼
+"I love Generative AI."
+        │
+        ▼
+────────────────────────────────────
+        OpenAI Server
+────────────────────────────────────
+        │
+        ▼
+Tokenizer
+(Text → Tokens)
+        │
+        ▼
+Token IDs
+        │
+        ▼
+Embedding Layer
+(Token IDs → Token Embeddings)
+        │
+        ▼
+Embedding Model
+(Produces one embedding for the whole input)
+        │
+        ▼
+1536-Dimensional Vector
+────────────────────────────────────
+        │
+        ▼
+Returned to Your Python Program
+        │
+        ▼
+embedding = response.data[0].embedding
+        │
+        ▼
+print(type(embedding))
+print(len(embedding))
+print(embedding[:10])
+
+
+---
+                  DOCUMENTS
+                      │
+                      ▼
+              Embedding Model
+                      │
+                      ▼
+               Document Vectors
+                      │
+                      ▼
+              Vector Database
+────────────────────────────────────────────
+
+User Question
+      │
+      ▼
+Embedding Model
+      │
+      ▼
+Question Vector
+      │
+      ▼
+⭐ Cosine Similarity ⭐
+(Question Vector vs Document Vectors)
+      │
+      ▼
+Top-K Matching Chunks
+      │
+      ▼
+Original Text
+      │
+      ▼
+Prompt Builder
+      │
+      ▼
+GPT
+      │
+      ▼
+Answer
+
+
+[
+results = vector_db.similarity_search(
+    query="How can I change my ATM PIN?",
+    k=3
+)
+]
+
+Cosine similarity is used during the retrieval stage of RAG. First, all document chunks are converted into embeddings and stored in a vector database. When a user asks a question, the question is also converted into an embedding. The vector database then computes the cosine similarity between the question embedding and all stored document embeddings, ranks them by similarity, and returns the top-k most relevant chunks. These retrieved text chunks are then included in the prompt sent to the LLM.
+
