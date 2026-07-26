@@ -1,1 +1,89 @@
+Embadding --convert text into numbers that capture meaning, so computers can compare meanings instead of just matching words.
+These vectors are close together because the meanings are similar.
+Now cosine similarity can identify them as related.
+The vector is important because it represents meaning.
+folating number - Those numbers are a mathematical representation of the sentence's meaning.
+
+The purpose of embeddings is to convert text into dense numerical vectors that capture semantic meaning. 
+These vectors allow machines to compare the meaning of different texts using similarity measures such as cosine similarity. 
+In GenAI applications like RAG, embeddings are used to retrieve the most relevant documents from a vector database, enabling the LLM to generate accurate, context-aware answers.
+
+Semantic Search → Search by meaning.
+Semantic Similarity → Similar meaning.
+Semantic Embedding → A numerical representation of meaning.
+Semantic Retrieval → Retrieve information based on meaning, not exact words.
+This vector captures the general meaning of Apple based on what the model learned during training.
+[Because the embedding for the token alone doesn't fully capture the sentence-specific meaning.]
+
+Question: How does an embedding model learn semantic meaning?
+
+Strong Answer:
+
+An embedding model is trained on massive amounts of text. It starts with random vectors and gradually adjusts them during training by 
+learning from the contexts in which words appear. Words that occur in similar contexts, such as "dog" and "puppy," end up with similar embeddings.
+This allows the model to capture general semantic relationships without being explicitly programmed with definitions.
+
+But is one embedding enough?
+
+Suppose we have these two sentences. [Self-Attention looks at every word.]
+Sentence 1: I deposited money in the bank. Bank = Financial Institution
+Sentence 2: The fisherman sat on the bank of the river. Bank = River Side
+
+How can the model know which meaning is correct?
+
+Embeddings alone cannot fully solve this.
+
+This is why Self-Attention exists
+Self-attention asks: "Which surrounding words help me understand this word?"
+
+Embedding alone can't reliably distinguish these meanings. Self-attention can.
+
+At this point, the model only knows that "bank" is a word with multiple possible meanings.
+
+It does not know whether it means:
+
+Financial institution
+River bank
+
+*******
+Transformer Receives All Embeddings
+The Transformer doesn't process one word at a time.
+
+It processes all token embeddings together.
+
+"Which other token embeddings should I pay attention to?"
+
+It compares "bank" with every other token.
+It finds:has a strong relationship with deposited and money So it gives them higher attention.
+
+Originally:
+bank
+
+↓
+
+General Embedding
+
+
+After self-attention
+bank
+
+↓
+
+Contextual Embedding
+
+[0.91, -0.15, 0.83...]
+
+Notice something important.
+
+The embedding changed.
+[0.42, -0.31, 0.18...]
+---------------------------------------------------------------------------------------------------------------------------
+
+The embedding layer converts each token into a vector representing its general semantic meaning. These embeddings are then passed to the Transformer.
+Inside the Transformer, the self-attention mechanism compares each token's embedding with the embeddings of all other tokens in the input. Based on these relationships, it updates the embeddings into contextual embeddings,
+allowing the model to understand the correct meaning of each word within the specific sentence before predicting the next token.
+
+
+[Embeddings provide the starting meaning. Self-attention refines that meaning using the context of the entire prompt.]
+
 
