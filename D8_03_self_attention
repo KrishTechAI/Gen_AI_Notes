@@ -4,6 +4,8 @@ Now cosine similarity can identify them as related.
 The vector is important because it represents meaning.
 folating number - Those numbers are a mathematical representation of the sentence's meaning.
 
+semantice -- what is means. its all abount understanding what words, sentences or symbols are trying to say. 
+
 The purpose of embeddings is to convert text into dense numerical vectors that capture semantic meaning. 
 These vectors allow machines to compare the meaning of different texts using similarity measures such as cosine similarity. 
 In GenAI applications like RAG, embeddings are used to retrieve the most relevant documents from a vector database, enabling the LLM to generate accurate, context-aware answers.
