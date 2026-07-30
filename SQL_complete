@@ -853,4 +853,57 @@ ORDER BY sorts the result set in ascending or descending order. It does not grou
 | 105   | Rahul | Finance    |
 
 
+SELECT Department,
+       COUNT(*)
+FROM Employee
+GROUP BY Department;
+
+
+SELECT *
+FROM Employee
+ORDER BY Name;
+
+
+| GROUP BY                                      | ORDER BY                      |
+| --------------------------------------------- | ----------------------------- |
+| Groups rows                                   | Sorts rows                    |
+| Used with aggregate functions                 | Used to display data in order |
+| Reduces the number of rows (when aggregating) | Number of rows stays the same |
+| Creates summary data                          | Creates ordered data          |
+
+
+Can GROUP BY and ORDER BY Be Used Together?
+
+SELECT Department,
+       COUNT(*) AS TotalEmployees
+FROM Employee
+GROUP BY Department
+ORDER BY TotalEmployees DESC;
+
+
+Which executes first?
+
+GROUP BY or ORDER BY?
+
+Best Answer
+
+GROUP BY executes first because SQL must group the records before sorting the final result using ORDER BY.
+
+
+When have you used GROUP BY and ORDER BY together?
+
+Say:
+
+"I have used GROUP BY to generate summary reports such as ticket counts by status or employee counts by department,
+and ORDER BY to present the results in descending order so that the highest counts appear first."
+
+Interviewer: Explain GROUP BY vs ORDER BY with an example.
+
+Best Answer ⭐⭐⭐⭐⭐
+
+"GROUP BY is used to group similar records and calculate summary values like COUNT or SUM. ORDER BY is used to sort the final result. For example, 
+I can use GROUP BY Department to count employees in each department, and then ORDER BY COUNT(*) DESC to display the departments with the highest employee count first."
+
+"GROUP BY is used to group rows with the same values and calculate aggregate results such as COUNT or SUM. ORDER BY is used to sort the final output in ascending or descending order.
+GROUP BY executes before ORDER BY, and both are commonly used together in reporting queries."
 
