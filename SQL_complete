@@ -138,5 +138,100 @@ WHERE filters rows before grouping, while HAVING filters groups after aggregatio
 
 
 3) INSERT statement
+The INSERT statement is used to add new records into a database table. It is commonly used during onboarding, data migration, importing historical data, 
+and creating new application records. In my current role, I have used SQL to onboard new users and insert application-related data after validating the business 
+requirements and obtaining the necessary approvals.
+
+In my current role, I have worked on onboarding activities where new users were added to the application through SQL after receiving approval. 
+Before inserting the records, I verified the required details with the business team to ensure data accuracy.
+
+First, I would validate the request and ensure it is approved. Then I would verify whether the users already exist to avoid duplicates.
+After validation, I would insert the new user records using SQL or the application's onboarding process.
+Finally, I would verify that the records were created successfully and inform the customer.
+
+INSERT INTO Employee
+(EmpID, Name, Department, Salary)
+VALUES
+(105, 'Krishna', 'IT', 65000);
+
+Q. Can we insert only selected columns?
+Yes. We can specify only the required columns in the INSERT statement. Any omitted columns will either take their default value or NULL, depending on the table definition.
+
+Q. Can INSERT create duplicate records?
+Yes, unless the table has constraints such as a PRIMARY KEY or UNIQUE constraint to prevent duplicates.
+
+Q. What happens if you insert a duplicate primary key?
+The database returns an error because the PRIMARY KEY must be unique. The new record will not be inserted.
+
+Q. Can INSERT insert NULL values?
+Yes, provided the column allows NULL values and does not have a NOT NULL constraint.
 
 
+UPDATE STATEMENT:
+
+The UPDATE statement is used to modify existing records in a database table. It allows us to change one or more column values for specific rows based on a condition.
+In my current role, I use UPDATE statements to perform approved data corrections, user updates,
+and configuration changes after validating the request and ensuring the correct records are identified.
+
+UPDATE Employee
+SET Salary = 75000
+WHERE EmpID = 101;
+
+| Keyword | Meaning                        |
+| ------- | ------------------------------ |
+| UPDATE  | Table you want to modify       |
+| SET     | Column(s) to change            |
+| WHERE   | Which row(s) should be updated |
+
+If the WHERE clause is omitted, the UPDATE statement modifies every row in the table. 
+This can cause serious production issues. That's why I always verify the target records using a SELECT query before executing an UPDATE.
+
+
+UPDATE Employee
+SET Salary = 70000,
+    Department = 'Finance'
+WHERE EmpID = 101;
+
+Can UPDATE modify multiple rows?
+Yes. If multiple rows satisfy the WHERE condition, all matching rows will be updated.
+
+UPDATE Employee
+SET Salary = Salary + 2000
+WHERE Department = 'HR';
+
+
+DELETE statement:
+
+The DELETE statement is used to remove existing records from a table based on a specified condition. It deletes only the data, not the table structure. 
+In production, I use DELETE only after proper approval and verification because deleting data is an irreversible action unless a backup or transaction rollback is available.
+
+DELETE FROM Employee
+WHERE EmpID = 101;
+
+If the WHERE clause is omitted, all records in the table are deleted. Therefore, I always verify the records using a SELECT query before executing a DELETE statement in production.
+
+I have worked with production databases, but permanent deletion is generally controlled through change management and approvals.
+Before deleting any record, I verify the data, confirm the request, execute the DELETE only after approval, and validate the result.
+
+Q.A customer requests that an employee record be deleted?
+First, I would verify the employee record using a SELECT query. Then I would confirm that the deletion request has the necessary business approval. After ensuring the correct record is identified,
+I would execute the DELETE statement using an appropriate WHERE condition. Finally, I would verify that the record has been removed and update the customer.
+
+Q. A manager asks you to delete all inactive users.
+I would first identify the users by running a SELECT query with the same WHERE condition to verify the affected records. 
+After approval, I would execute the DELETE statement and then validate that only the intended users were removed.
+
+
+| Feature               | DELETE               | TRUNCATE       | DROP                    |
+| --------------------- | -------------------- | -------------- | ----------------------- |
+| Removes               | Selected rows        | All rows       | Entire table            |
+| WHERE clause          | ✅ Yes                | ❌ No           | ❌ No                    |
+| Table structure       | Remains              | Remains        | Deleted                 |
+| Can delete one record | ✅ Yes                | ❌ No           | ❌ No                    |
+| Use case              | Remove specific data | Clear all data | Remove table completely |
+
+TRUNCATE TABLE Employee; - Deletes every row.
+DROP TABLE Employee; --The table no longer exists.
+
+DELETE removes rows based on a condition and supports the WHERE clause. TRUNCATE removes all rows from a table and does not support WHERE.  ****
+The table structure remains in both cases, but TRUNCATE is generally faster because it removes all data at once.
