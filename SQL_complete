@@ -1,0 +1,142 @@
+select * from customer;
+
+select name from customer;
+
+select name, salary from customer
+Select:
+
+
+SQL stands for Structured Query Language. It is the standard language used to communicate with relational databases. Using SQL, we can retrieve, insert, update, delete, and analyze data stored in tables. In my current role, I use SQL to validate production data, investigate customer issues, perform data corrections, generate reports, and support application troubleshooting.
+
+Defines SQL.
+Explains its purpose.
+Connects it to your work experience.
+
+| CustomerID | Name  | City      | Salary |
+| ---------- | ----- | --------- | ------ |
+| 1          | John  | Chennai   | 50000  |
+| 2          | Alice | Bangalore | 70000  |
+| 3          | David | Mumbai    | 60000  |
+
+
+| Category | Purpose          | Examples               |
+| -------- | ---------------- | ---------------------- |
+| DQL      | Retrieve data    | SELECT                 |
+| DML      | Manipulate data  | INSERT, UPDATE, DELETE |
+| DDL      | Define structure | CREATE, ALTER, DROP    |
+| DCL      | Permissions      | GRANT, REVOKE          |
+| TCL      | Transactions     | COMMIT, ROLLBACK       |
+
+
+Definition (What it is)
+Purpose (Why we use it)
+Your Experience (How you've used it)
+
+SELECT: Command 
+
+ SELECT is a SQL command used to retrieve data from one or more tables in a database. It is a read-only operation, meaning it does not modify the data. In my current role, I use SELECT queries to validate customer information, investigate production issues, verify data before making updates, and generate reports.
+
+SELECT only retrieves data. It does not insert, update, or delete records.
+Yes. By using JOINs, SELECT can retrieve related data from multiple tables.
+
+I use SELECT almost every day to verify customer records, validate application data, investigate production issues, check user account details, verify onboarding information, and generate reports for stakeholders.
+
+SELECT Name,
+       Department,
+       Salary
+FROM Employee;
+
+SELECT * retrieves all columns from a table, whereas SELECT Name retrieves only the Name column. In production, I prefer selecting only the required columns because it improves query performance and reduces unnecessary data retrieval.
+
+
+SELECT *
+FROM Users
+WHERE Email='john@gmail.com';
+
+1.First, I verify whether the user exists.
+2.I'll check the account status.
+3.Then I'll investigate whether the issue is related to permissions, account status, or the application.
+4. Support engineers always verify first.You didn't immediately say UPDATE.
+
+
+Can SELECT retrieve duplicate rows?
+Yes. If multiple rows have the same values, SELECT returns them. To remove duplicates, we use DISTINCT.
+
+
+WHERE CLAUSE:
+
+The WHERE clause is used to filter records based on a specified condition. Instead of retrieving all rows from a table, it returns only the rows that satisfy the condition. I frequently use WHERE in my current role to investigate customer issues, validate specific records, and troubleshoot production incidents.
+
+SELECT *
+FROM Employee
+WHERE EmpID = 102;
+
+OPERATORS: 
+A. Equal (=)I use the equals operator when I need an exact match, such as retrieving a customer by CustomerID or checking a user's email address.
+B. Greater Than (>)
+C. Less Than (<)
+D. Greater Than or Equal (>=)
+E. Less Than or Equal (<=)
+F. Not Equal (<> or !=)
+3. BETWEEN : BETWEEN makes range queries more readable. It includes both the starting and ending values.
+SELECT *
+FROM Employee
+WHERE Salary BETWEEN 50000 AND 70000;
+4. IN : Suppose you want employees from HR and Finance.
+SELECT *
+FROM Employee
+WHERE Department IN ('HR','Finance');
+I use IN when I need to compare a column against multiple possible values. It makes the query shorter and easier to read than multiple OR conditions.
+5. Not in: 
+SELECT employee_name, department 
+FROM employees
+WHERE department NOT IN ('HR', 'Marketing');
+
+6. LIKE : Used for pattern matching.
+
+SELECT *
+FROM Employee
+WHERE Name LIKE 'J%';
+WHERE Name LIKE '%n';
+WHERE Name LIKE '%ri%';
+WHERE Name LIKE '_a%';
+
+The equals operator is used for exact matches, whereas LIKE is used for pattern matching using wildcards such as % and _.
+
+NULL:
+SELECT *
+FROM Employee
+WHERE ManagerID IS NULL;
+
+NULL represents an unknown value, so it cannot be compared using =. SQL provides IS NULL and IS NOT NULL to check for NULL values.
+
+
+7. Combining Conditions:
+
+AND:
+SELECT *
+FROM Employee
+WHERE Department='HR'
+AND Salary>55000;
+
+OR:
+SELECT *
+FROM Employee
+WHERE Department='HR'
+OR Department='Finance';
+
+NOT:
+SELECT *
+FROM Employee
+WHERE NOT Department='IT';
+
+Can WHERE use aggregate functions?
+No. Aggregate functions such as COUNT, SUM, and AVG cannot be used directly in the WHERE clause. For filtering aggregated results, we use the HAVING clause.
+
+WHERE filters rows before grouping, while HAVING filters groups after aggregation. ***
+
+
+
+3) INSERT statement
+
+
