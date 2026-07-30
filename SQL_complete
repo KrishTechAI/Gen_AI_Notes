@@ -235,3 +235,221 @@ DROP TABLE Employee; --The table no longer exists.
 
 DELETE removes rows based on a condition and supports the WHERE clause. TRUNCATE removes all rows from a table and does not support WHERE.  ****
 The table structure remains in both cases, but TRUNCATE is generally faster because it removes all data at once.
+
+
+"In production, I treat DELETE as a high-risk operation. I first validate the records using a SELECT query, confirm the business approval, 
+execute the DELETE with a precise WHERE condition, and then verify that only the intended records were removed."
+
+-----------------------------------------------------------------------------------------------------------
+Module 2 – JOIN
+
+A JOIN is used to combine data from two or more tables based on a common column. It helps retrieve related information stored in different tables.
+
+Your experience answer:
+
+In my projects, I have used JOINs to retrieve customer information along with loan details, validate data between multiple tables, and generate reports.
+Employee Table
+| EmpID | Name  | DeptID |
+| ----- | ----- | ------ |
+| 101   | John  | 1      |
+| 102   | Alice | 2      |
+| 103   | David | 1      |
+Department Table
+| DeptID | Department |
+| ------ | ---------- |
+| 1      | HR         |
+| 2      | IT         |
+
+
+SELECT e.Name,
+       d.Department
+FROM Employee e
+JOIN Department d
+ON e.DeptID = d.DeptID;
+
+Match employees with their departments using DeptID. 
+We use JOIN to retrieve related data stored in different tables. Instead of storing duplicate information in one table, databases normalize data into multiple tables, and JOIN combines them when needed.
+Yes. SQL allows us to join multiple tables as long as there is a relationship between them.
+
+Can two tables be joined without a common column?
+Practically, JOINs are meaningful only when there is a logical relationship between the tables. Without a matching condition, 
+the result becomes a Cartesian product (every row from one table combined with every row from the other), which is usually not what we want.
+
+INNER JOIN:
+
+INNER JOIN returns only the matching records from both tables based on the specified join condition. If there is no match in either table, that record is not included in the result.
+
+SELECT e.EmpID,
+       e.Name,
+       d.Department
+FROM Employee e
+INNER JOIN Department d
+ON e.DeptID = d.DeptID;
+
+syntax:
+SELECT columns
+FROM Table1
+INNER JOIN Table2
+
+Can INNER JOIN join three tables?
+SELECT columns
+FROM Table1
+INNER JOIN Table2
+ON Table1.Column = Table2.Column;
+ON Table1.Column = Table2.Column;
+
+"Yes. I have used INNER JOINs to combine data from multiple tables for production troubleshooting, customer validation,
+reporting, and data verification. For example, I joined customer tables with loan tables to validate records and identify data inconsistencies."
+
+
+LEFT JOIN:   LEFT JOIN = Keep everything from the LEFT table.
+
+A LEFT JOIN returns all records from the left table and only the matching records from the right table. If there is no matching record in the right table, SQL returns NULL for the right table's columns.
+
+SELECT e.EmpID,
+       e.Name,
+       d.Department
+FROM Employee e
+LEFT JOIN Department d
+ON e.DeptID = d.DeptID;
+
+Q."Some employees are not assigned to any department."
+SELECT e.EmpID,
+       e.Name
+FROM Employee e
+LEFT JOIN Department d
+ON e.DeptID = d.DeptID
+WHERE d.DeptID IS NULL;
+
+
+How do you find records that do not have a matching record in another table?
+
+Best Answer
+
+I use a LEFT JOIN along with WHERE ... IS NULL. This returns records from the left table that do not have a matching record in the right table.
+
+
+One possible reason is that the query uses an INNER JOIN, which excludes records without matching data in the related table. If the requirement is to display all employees, I would use a LEFT JOIN instead.
+
+INNER JOIN = Matching records only
+LEFT JOIN = All left table records + matching right table records
+
+
+RIGHT JOIN:
+
+A RIGHT JOIN returns all records from the right table and the matching records from the left table. If there is no matching record in the left table, SQL returns NULL for the left table's columns.
+
+
+SELECT e.Name,
+       d.Department
+FROM Employee e
+RIGHT JOIN Department d
+ON e.DeptID = d.DeptID;
+
+Q. What is the difference between LEFT JOIN and RIGHT JOIN?
+
+Best Answer
+
+LEFT JOIN returns all records from the left table and matching records from the right table. RIGHT JOIN returns all records from the right table and matching records from the left table.
+
+Q.When would you use RIGHT JOIN?
+I would use RIGHT JOIN when I need all records from the right table, even if there are no matching records in the left table. For example, displaying all departments, including departments that currently have no employees.
+
+SELECT d.Department
+FROM Employee e
+RIGHT JOIN Department d
+ON e.DeptID = d.DeptID
+WHERE e.EmpID IS NULL;
+
+I can use a RIGHT JOIN to return all departments, even if no employees are assigned. In practice, I would often use a LEFT JOIN by making the Department table the left table because it is more readable.
+
+A good answer is:
+
+
+"Not very often. In most projects, we use LEFT JOIN because it's easier to understand. If needed, I can rewrite a RIGHT JOIN as a LEFT JOIN by changing the table order."
+
+
+FULL OUTER JOIN:
+
+A FULL OUTER JOIN returns all records from both tables. When a matching record exists, it combines them. If there is no match, SQL returns NULL for the missing side.
+
+I use FULL OUTER JOIN when I need all records from both tables, regardless of whether a matching record exists. It is useful for identifying missing or unmatched data during reconciliation and data validation.
+
+FULL OUTER JOIN = LEFT JOIN + RIGHT JOIN
+
+SELECT e.Name,
+       d.Department
+FROM Employee e
+FULL OUTER JOIN Department d
+ON e.DeptID = d.DeptID;
+
+| JOIN            | Returns                                             |
+| --------------- | --------------------------------------------------- |
+| INNER JOIN      | Only matching records                               |
+| LEFT JOIN       | All rows from left table + matching rows from right |
+| RIGHT JOIN      | All rows from right table + matching rows from left |
+| FULL OUTER JOIN | All rows from both tables                           |
+
+
+Can FULL OUTER JOIN return duplicate rows?
+
+Answer
+
+Yes.
+
+If one row matches multiple rows in the other table, duplicates appear.
+
+Find unmatched records.
+SELECT e.Name,
+       d.Department
+FROM Employee e
+FULL OUTER JOIN Department d
+ON e.DeptID = d.DeptID
+WHERE e.EmpID IS NULL
+   OR d.DeptID IS NULL;
+
+
+"I mostly use INNER JOIN and LEFT JOIN for reporting, troubleshooting, and data validation. FULL OUTER JOIN is used less frequently,
+mainly for reconciliation and migration activities where I need to identify unmatched records from both tables."
+
+| JOIN Type       | Returns                   | Missing Records? |
+| --------------- | ------------------------- | ---------------- |
+| INNER JOIN      | Only matching rows        | ❌ No             |
+| LEFT JOIN       | All left + matching right | ✅ Left only      |
+| RIGHT JOIN      | All right + matching left | ✅ Right only     |
+| FULL OUTER JOIN | All rows from both tables | ✅ Both sides     |
+
+Q. Explain the different types of JOINs.
+"SQL has four main JOINs. INNER JOIN returns only matching records. LEFT JOIN returns all records from the left table and matching records from the right table. RIGHT JOIN returns
+all records from the right table and matching records from the left table. FULL OUTER JOIN returns all records from both tables, showing NULL where no match exists."
+
+| EmpID | EmployeeName | ManagerID |
+| ----- | ------------ | --------- |
+| 101   | John         | 201       |
+| 102   | Alice        | 201       |
+| 103   | David        | 202       |
+| 201   | Robert       | NULL      |
+| 202   | Michael      | NULL      |
+
+SELECT e.EmployeeName AS Employee,
+       m.EmployeeName AS Manager
+FROM Employee e
+LEFT JOIN Employee m
+ON e.ManagerID = m.EmpID;
+
+Since the same table is used twice, aliases help SQL distinguish between the two instances of the table. One alias represents the employee, and the other represents the manager.
+Q. How do you display both employee and manager names?
+I would use a SELF JOIN because both employees and managers are stored in the same table. I would assign different aliases to the table and join the employee's ManagerID with the manager's EmpID.
+
+Give a real-world example of a SELF JOIN.
+
+| Question           | Answer                                             |
+| ------------------ | -------------------------------------------------- |
+| What is SELF JOIN? | Joining a table with itself                        |
+| Why use it?        | To retrieve related data from the same table       |
+| Common example     | Employee–Manager relationship                      |
+| Why aliases?       | To distinguish the two instances of the same table |
+
+"An employee-manager hierarchy is the most common example. Both employees and managers are stored in the same Employee table, so a SELF JOIN is used to display each employee along with their manager's name."
+
+"A SELF JOIN is a join where a table is joined with itself. It is commonly used for hierarchical data like employee-manager relationships. We use table aliases to differentiate the two instances of the same table."
