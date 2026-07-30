@@ -453,3 +453,404 @@ Give a real-world example of a SELF JOIN.
 "An employee-manager hierarchy is the most common example. Both employees and managers are stored in the same Employee table, so a SELF JOIN is used to display each employee along with their manager's name."
 
 "A SELF JOIN is a join where a table is joined with itself. It is commonly used for hierarchical data like employee-manager relationships. We use table aliases to differentiate the two instances of the same table."
+
+
+ORDER BY:
+
+ORDER BY is used to sort the result set in ascending or descending order based on one or more columns.
+
+I would retrieve the employee records and use ORDER BY Salary DESC so that the employees with the highest salary appear first.
+I would sort the result using ORDER BY CreatedDate DESC to display the latest tickets first.
+
+"I have used ORDER BY while generating reports, prioritizing production tickets by creation date, and displaying business data such as customer records or transactions in a meaningful order."
+
+
+Ascending Order (Default)
+SELECT *
+FROM Employee
+ORDER BY Salary;
+
+SELECT *
+FROM Employee
+ORDER BY Salary ASC;
+SELECT *
+FROM Employee
+ORDER BY Salary DESC;
+
+SELECT *
+FROM Employee
+ORDER BY Department ASC,
+         Salary DESC;
+
+SELECT *
+FROM Employee
+WHERE Salary > 60000
+ORDER BY Salary DESC;
+
+
+GROUP BY:
+
+GROUP BY is used to group rows that have the same values in a column and perform aggregate calculations such as COUNT, SUM, AVG, MIN, and MAX on each group.
+
+"I have used GROUP BY to generate summary reports such as ticket counts by status, users by company, and business metrics like department-wise employee counts and average values."
+
+"GROUP BY groups rows with the same value in one or more columns and is typically used with aggregate functions like COUNT, SUM, AVG, MIN, and MAX. 
+For example, if we need to find the number of employees in each department, we use GROUP BY Department with COUNT(*)."
+(Groups similar values and performs aggregate calculations.)
+Without GROUP BY, SQL cannot calculate department-wise counts.
+COUNT:
+
+SELECT Department,
+       COUNT(*)
+FROM Employee
+GROUP BY Department;
+SUM: 
+
+SELECT Department,
+       SUM(Salary)
+FROM Employee
+GROUP BY Department;
+
+AVG:
+
+SELECT Department,
+       AVG(Salary)
+FROM Employee
+GROUP BY Department;
+
+GROUP BY with MAX:
+
+SELECT Department,
+       MAX(Salary)
+FROM Employee
+GROUP BY Department;
+
+MIN:
+
+SELECT Department,
+       MIN(Salary)
+FROM Employee
+GROUP BY Department;
+
+Can GROUP BY be used without aggregate functions?
+
+SELECT Department
+FROM Employee
+GROUP BY Department;
+This returns unique departments.
+
+Which functions are commonly used with GROUP BY?
+
+Answer
+COUNT()
+SUM()
+AVG()
+MIN()
+MAX()
+
+Can GROUP BY have multiple columns?
+SELECT Department,
+       Gender,
+       COUNT(*)
+FROM Employee
+GROUP BY Department, Gender;
+
+
+Module 3 – Lesson 3: Aggregate Functions
+
+
+Aggregate functions perform calculations on a group of rows and return a single result. The most commonly used aggregate functions are COUNT(), SUM(), AVG(), MIN(), and MAX().
+
+I have used aggregate functions to generate business reports, such as counting tickets by status, calculating total transactions,
+finding average response times, and identifying maximum and minimum values for operational analysis."
+
+| EmpID | Name  | Department | Salary |
+| ----- | ----- | ---------- | ------ |
+| 101   | John  | HR         | 50000  |
+| 102   | Alice | IT         | 70000  |
+| 103   | David | HR         | 55000  |
+| 104   | Priya | IT         | 80000  |
+| 105   | Rahul | Finance    | 65000  |
+
+
+
+COUNT() returns the number of rows.
+SELECT COUNT(*)
+FROM Employee;
+
+COUNT(column)
+SELECT COUNT(Salary)
+FROM Employee;
+
+
+COUNT(*) counts all rows in the table, including rows with NULL values in any column. COUNT(column) counts only the rows where that specific column is NOT NULL.
+
+How many open tickets are there?
+
+SELECT COUNT(*)
+FROM Tickets
+WHERE Status='Open';
+
+SELECT SUM(LoanAmount)
+FROM Loans
+WHERE Status='Approved';
+
+SELECT AVG(Salary)
+FROM Employee;
+
+SELECT MAX(Salary)
+FROM Employee;
+
+SELECT MIN(Salary)
+FROM Employee;
+WHERE Status='Open';
+
+
+SELECT Department,
+       AVG(Salary)
+FROM Employee
+GROUP BY Department;
+
+What are aggregate functions?
+
+Answer
+
+Functions that calculate a single result from multiple rows.
+
+Aggregate Functions with GROUP BY:
+
+
+Count employees in each department.
+
+SELECT Department,
+       COUNT(*)
+FROM Employee
+GROUP BY Department;
+
+
+"Aggregate functions are used to perform calculations on multiple rows and return a single result. COUNT() counts rows, SUM() calculates totals, AVG() finds the average,
+MAX() returns the highest value, and MIN() returns the lowest value. They are commonly used with GROUP BY to generate summary reports."
+
+
+
+HAVING:
+
+HAVING is used to filter grouped data after the GROUP BY clause. It is mainly used with aggregate functions like COUNT(), SUM(), AVG(), MIN(), and MAX().
+
+"I use HAVING when I need to filter grouped or summarized results. For example, finding departments with more than five employees or customers with more than ten orders."
+
+| EmpID | Name  | Department | Salary |
+| ----- | ----- | ---------- | ------ |
+| 101   | John  | HR         | 50000  |
+| 102   | Alice | IT         | 70000  |
+| 103   | David | HR         | 55000  |
+| 104   | Priya | IT         | 80000  |
+| 105   | Rahul | Finance    | 65000  |
+
+First, we need to:
+
+Group employees by department.
+Count employees.
+Filter only departments where the count is greater than 1.
+
+This is where HAVING is used.
+
+Easy Way to Remember:
+WHERE  → Filters rows
+
+GROUP BY
+
+HAVING → Filters groups
+
+FROM
+
+↓
+
+WHERE
+
+↓
+
+GROUP BY
+
+↓
+
+HAVING
+
+↓
+
+SELECT
+
+↓
+
+ORDER BY
+
+
+Notice:
+
+WHERE executes before GROUP BY.
+
+HAVING executes after GROUP BY.
+
+
+| WHERE                                  | HAVING                      |
+| -------------------------------------- | --------------------------- |
+| Filters individual rows                | Filters grouped data        |
+| Executes before GROUP BY               | Executes after GROUP BY     |
+| Cannot use aggregate functions         | Can use aggregate functions |
+| Used without grouping or with grouping | Mostly used with GROUP BY   |
+
+Example 1 — WHERE
+
+Manager asks:
+
+Show employees whose salary is greater than 60,000.
+
+SELECT *
+FROM Employee
+WHERE Salary > 60000; 
+
+
+Example 2 — HAVING
+
+Manager asks:
+
+Show departments having more than one employee.
+
+SELECT Department,
+       COUNT(*)
+FROM Employee
+GROUP BY Department
+HAVING COUNT(*) > 1;
+
+HAVING filters groups.
+
+5. Can We Use Aggregate Functions in WHERE?
+Interview Question ⭐⭐⭐⭐⭐
+
+Interviewer: Can we use COUNT(), SUM(), AVG() in WHERE?
+
+Best Answer
+
+No. Aggregate functions cannot be used in the WHERE clause because WHERE executes before GROUP BY. Aggregate values are calculated only after grouping, so we must use HAVING instead.
+
+
+Wrong Query
+SELECT Department,
+       COUNT(*)
+FROM Employee
+WHERE COUNT(*) > 1
+GROUP BY Department;
+
+❌ Error
+
+
+SELECT Department,
+       COUNT(*)
+FROM Employee
+GROUP BY Department
+HAVING COUNT(*) > 1;
+
+✅ Correct
+
+
+SELECT Status,
+       COUNT(*) AS TicketCount
+FROM Tickets
+GROUP BY Status
+HAVING COUNT(*) > 2;
+
+SELECT CompanyID,
+       COUNT(*) AS TotalJobs
+FROM Jobs
+GROUP BY CompanyID
+HAVING COUNT(*) > 10;
+
+. WHERE + HAVING Together
+
+This is a favorite interview question.
+
+Manager asks:
+
+Show departments where employees earn more than 50,000, and display only departments having more than one such employee.
+
+SELECT Department,
+       COUNT(*) AS EmployeeCount
+FROM Employee
+WHERE Salary > 50000
+GROUP BY Department
+HAVING COUNT(*) > 1;
+
+Q1
+
+What is HAVING?
+
+Answer:
+
+Filters grouped records.
+
+Q2
+
+Can HAVING be used without GROUP BY?
+
+Answer:
+
+Yes, but it is uncommon. HAVING is mainly used with GROUP BY.
+
+Q3
+
+Can aggregate functions be used in HAVING?
+
+Answer:
+
+Yes.
+
+Example
+
+HAVING COUNT(*) > 5
+Q4
+
+Can aggregate functions be used in WHERE?
+
+Answer:
+
+No.
+
+Q5
+
+Which executes first?
+
+Answer:
+
+WHERE executes before GROUP BY.
+
+HAVING executes after GROUP BY.
+
+| WHERE                  | HAVING                      |
+| ---------------------- | --------------------------- |
+| Filters rows           | Filters groups              |
+| Before GROUP BY        | After GROUP BY              |
+| No aggregate functions | Aggregate functions allowed |
+| Faster                 | Applied after grouping      |
+
+
+"WHERE filters individual rows before grouping, while HAVING filters grouped results after GROUP BY. 
+Aggregate functions such as COUNT(), SUM(), and AVG() cannot be used in WHERE but can be used in HAVING. 
+For example, to find departments with more than five employees, I would use GROUP BY with HAVING COUNT(*) > 5."
+
+
+
+GROUP BY vs ORDER BY:
+
+GROUP BY groups rows with the same values and is mainly used with aggregate functions like COUNT(), SUM(), and AVG().
+ORDER BY sorts the result set in ascending or descending order. It does not group data.
+
+| EmpID | Name  | Department |
+| ----- | ----- | ---------- |
+| 101   | John  | HR         |
+| 102   | Alice | IT         |
+| 103   | David | HR         |
+| 104   | Priya | IT         |
+| 105   | Rahul | Finance    |
+
+
+
